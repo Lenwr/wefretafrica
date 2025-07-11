@@ -46,14 +46,19 @@ const search = async () => {
       ]
 
       // On mappe les colis et on force le statut en string, avec fallback sur 'scanné'
-      const colisDetails = (doc.colis?.[0]?.details || []).map((item, index) => ({
-        id: index + 1,
-        nom: doc.colis[0].nom || 'Inconnu',
-        coli: item.coli || `Colis ${index + 1}`,
-        quantite: doc.colis[0].quantite || 1,
-        statutColis: item.statutColis || 'scanné',
-        historique: item.historique || []
-      }))
+      const colisDetails = (doc.colis || []).flatMap((colisItem, colisIndex) => {
+  return (colisItem.details || []).map((item, index) => ({
+    id: `${colisIndex + 1}-${index + 1}`,
+    nom: colisItem.nom || `Colis ${colisIndex + 1}`,
+    coli: item.coli || `Colis ${colisIndex + 1}.${index + 1}`,
+    quantite: colisItem.quantite || 1,
+    statutColis: typeof item.statutColis === 'string'
+      ? item.statutColis
+      : (item.statutColis === false ? 'scanné' : 'inconnu'),
+    historique: item.historique || []
+  }))
+})
+
 
       data.value = {
         etat: doc.deliveryStatus || 'Inconnu',
@@ -66,7 +71,7 @@ const search = async () => {
         expediteur: doc.expediteur || 'Non renseigné',
         destinataire: doc.destinataire || 'Non renseigné',
         destination: doc.destination || 'Non renseigné',
-        nombreColis: doc.colis ? doc.colis[0]?.details?.length || 0 : 0,
+        nombreColis: colisDetails.length,
         telephone: doc.telephoneDestinataire || 'Non renseigné',
       }
       console.log(data.value.colis)
