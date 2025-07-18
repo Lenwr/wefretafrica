@@ -4,6 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore'
 import { db } from '../firebase/config'
 
 // Infos dynamiques
+const open = ref(false)
 const siteTitle = 'WefretAfrica'
 const siteDescription = 'Expédiez vos colis vers l’Afrique et l’international en toute sérénité. Suivi en temps réel, transparence, efficacité.'
 
@@ -105,11 +106,52 @@ const calculerVolume = () => {
 <template>
   <div class="bg-white text-gray-800 font-sans min-h-screen" style="font-family: 'Inter', sans-serif;">
     <!-- Hero Banner -->
+
+    <div class="navBar">
+      <nav class="bg-white  shadow sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16 items-center">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+              <span class="text-lg font-bold text-orange-600">WefretAfricaTracking</span>
+            </div>
+
+            <!-- Links -->
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-700">
+              <a href="https://wefretafrica.com" target="_blank" rel="noopener" class="hover:text-orange-500">
+                WefretAfrica
+              </a>
+            </div>
+
+
+            <!-- Connexion -->
+            <div class="relative" @mouseleave="open = false">
+              <button @click="open = !open"
+                class="text-sm font-semibold bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition">
+                Se connecter
+              </button>
+              <div v-if="open"
+                class="absolute right-0 mt-0.5 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <a href="/login-particulier"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
+                  Particulier
+                </a>
+                <a href="https://wefretafricasaas.vercel.app" target="_blank" rel="noopener"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
+                  Entreprise
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </nav>
+    </div>
     <div class="hero min-h-screen bg-cover relative flex items-center justify-center"
       style="background-image: url('/fret2.jpg');">
       <div class="absolute inset-0 bg-black opacity-60"></div>
       <div class="relative z-10 text-center text-white px-4 max-w-3xl">
-        <h1 class="mb-5 text-5xl font-extrabold">📦 WefretAfrica</h1>
+        <h1 class="mb-5 text-5xl font-extrabold">📦 WefretAfricaTracking</h1>
         <p class="mb-5 text-lg">
           Suivez vos colis en toute simplicité et restez informé à chaque étape de l’expédition.
           Votre sérénité est notre priorité.
@@ -303,8 +345,7 @@ const calculerVolume = () => {
       <h2 class="text-3xl font-bold mb-6">Délais de livraison</h2>
       <p class="text-gray-700 max-w-xl mx-auto mb-4">
         Nos délais varient selon la destination et le mode d’expédition choisi.
-        En général, comptez entre <strong>3 à 10 jours ouvrés</strong> pour les livraisons en Afrique, et <strong>5 à 15
-          jours</strong> pour l’international.
+        En général, comptez entre <strong>3 à 10 jours ouvrés</strong> pour les livraisons en fret aérien .
       </p>
       <p class="text-gray-700 max-w-xl mx-auto mb-6">
         Pour toute question spécifique, notre équipe est à votre disposition.
@@ -337,7 +378,7 @@ const calculerVolume = () => {
         <details class="p-4 bg-white rounded-lg shadow">
           <summary class="cursor-pointer font-semibold">Comment contacter le support ?</summary>
           <p class="mt-2">Utilisez le bouton de contact en bas à droite ou envoyez-nous un email à
-            support@wefretafrica.com</p>
+            wefretafrica.gmail.com</p>
         </details>
       </div>
     </section>
