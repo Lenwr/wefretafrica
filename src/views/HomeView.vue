@@ -213,7 +213,7 @@ const calculerVolume = () => {
             ref="trackingInput"
             v-model="trackingCode"
             placeholder="Entrez votre numéro de suivi"
-            class="flex-1 px-6 py-4 rounded-full text-lg text-white focus:ring-2 focus:ring-orange-400 transition"
+            class="flex-1 px-6 py-4 rounded-full border-2 text-lg text-white focus:ring-2 focus:ring-orange-400 transition"
           />
 
           <button
