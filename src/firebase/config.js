@@ -1,24 +1,26 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, collection } from 'firebase/firestore'
+import { initializeFirestore, collection } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
-import {getAuth} from 'firebase/auth'
-// ... other firebase imports
+import { getAuth } from 'firebase/auth'
 
 export const firebaseApp = initializeApp({
-    apiKey: "AIzaSyBpgPmOUmp-rHSG3D2K5PJ4oGAZ3bHymYM",
-    authDomain: "rdsgestion-b3ec6.firebaseapp.com",
-    projectId: "rdsgestion-b3ec6",
-    storageBucket: "rdsgestion-b3ec6.firebasestorage.app",
-    messagingSenderId: "302693543482",
-    appId: "1:302693543482:web:e11edce2a238c368cc4f03"
+  apiKey: 'AIzaSyAD3_lBREn2mj9hdNVG_oXmWAXpylFzI3o',
+  authDomain: 'aarontravelgestion.firebaseapp.com',
+  projectId: 'aarontravelgestion',
+  storageBucket: 'aarontravelgestion.appspot.com',
+  messagingSenderId: '251921548029',
+  appId: '1:251921548029:web:936a9dc35f715ae401f494',
+  measurementId: 'G-99L11P6DYT'
 })
 
-// used for the firestore refs
-export const db = getFirestore(firebaseApp)
+export const db = initializeFirestore(firebaseApp, {
+  experimentalAutoDetectLongPolling: true,
+  useFetchStreams: false
+})
 
+export const auth = getAuth(firebaseApp)
+export const storage = getStorage(firebaseApp)
 
-const storage = getStorage(firebaseApp)
-
-// here we can export reusable database reference
-export const auth = getAuth()
-export { storage  }
+// Références réutilisables
+export const enlevementsCollection = collection(db, 'enlevements')
+export const customersCollection = collection(db, 'customers')
