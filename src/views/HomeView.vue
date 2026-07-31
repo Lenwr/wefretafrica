@@ -9,6 +9,7 @@ const route = useRoute()
 const router = useRouter()
 
 const trackingInput = ref(null)
+const companySelect = ref(null)
 const resultsSection = ref(null)
 const trackingCode = ref('')
 const data = ref(null)
@@ -51,8 +52,26 @@ const trackingSlug = (value, fallback = 'wefretafrica') => {
   return slug || fallback
 }
 
-const entrepriseSlug = computed(() =>
+const partnerCompanies = [
+  { slug: 'paris-fret', name: 'Paris Fret', routes: 'France · Togo · Bénin' },
+  { slug: 'aaron-travel', name: 'Aaron Travel', routes: 'Fret international' },
+  { slug: 'wefretafrica', name: 'WefretAfrica', routes: 'Afrique · International' }
+]
+const selectedCompanySlug = ref(
   trackingSlug(route.params.entrepriseSlug || route.query.entreprise || 'wefretafrica')
+)
+const entrepriseSlug = computed(() => selectedCompanySlug.value)
+const availableCompanies = computed(() => {
+  if (partnerCompanies.some(company => company.slug === selectedCompanySlug.value)) {
+    return partnerCompanies
+  }
+  return [
+    { slug: selectedCompanySlug.value, name: selectedCompanySlug.value, routes: 'Entreprise partenaire' },
+    ...partnerCompanies
+  ]
+})
+const selectedCompany = computed(() =>
+  availableCompanies.value.find(company => company.slug === selectedCompanySlug.value)
 )
 
 const tarifBase = computed(() => tarifsDestination[destinationCalcul.value] || 0)
@@ -257,7 +276,7 @@ const search = async (options = {}) => {
     }
   } catch (e) {
     if (e instanceof TrackingApiError && e.status === 404) {
-      error.value = 'Aucun colis trouvé pour ce numéro.'
+      error.value = `Aucun colis trouvé chez ${selectedCompany.value?.name || entrepriseSlug.value} pour ce numéro.`
     } else if (e instanceof TrackingApiError && e.code === 'API_NOT_CONFIGURED') {
       error.value = 'Le service de suivi n’est pas configuré.'
     } else if (e instanceof TrackingApiError && e.status === 429) {
@@ -327,6 +346,18 @@ const useRecentSearch = async item => {
   await search()
 }
 
+const changeCompany = async () => {
+  error.value = ''
+  data.value = null
+  qrCodeUrl.value = ''
+  await router.replace({
+    name: 'tracking',
+    params: { entrepriseSlug: selectedCompanySlug.value },
+    query: trackingCode.value.trim() ? { code: trackingCode.value.trim() } : {}
+  })
+  trackingInput.value?.focus()
+}
+
 const calculerVolume = () => {
   estimationAerien.value = null
 
@@ -393,6 +424,14 @@ watch(
     destinationAerienne: destinationAerienne.value,
     estimationMode: estimationMode.value
   }))
+)
+
+watch(
+  () => route.params.entrepriseSlug,
+  value => {
+    const slug = trackingSlug(value || route.query.entreprise || 'wefretafrica')
+    if (slug !== selectedCompanySlug.value) selectedCompanySlug.value = slug
+  }
 )
 
 watch([poidsAerien, destinationAerienne], () => {
@@ -475,8 +514,42 @@ onBeforeUnmount(() => {
             </div>
 
             <div class="relative z-10 -mt-8 rounded-3xl border border-white/30 bg-white p-4 shadow-2xl sm:p-5">
-              <p class="text-sm font-black uppercase text-blue-700">Numéro de suivi</p>
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-sm font-black uppercase text-blue-700">Suivre un colis</p>
+                  <p class="mt-1 text-xs font-semibold text-slate-500">
+                    Choisissez votre entreprise puis saisissez le numéro du bordereau.
+                  </p>
+                </div>
+                <span class="hidden rounded-full bg-sky-50 px-3 py-1 text-xs font-black text-blue-700 sm:inline">
+                  Multi-entreprises
+                </span>
+              </div>
               <div class="mt-3 space-y-3">
+                <label class="block">
+                  <span class="mb-1.5 block text-xs font-black uppercase tracking-wide text-slate-500">
+                    Entreprise de fret
+                  </span>
+                  <select
+                    ref="companySelect"
+                    v-model="selectedCompanySlug"
+                    class="h-14 w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 text-base font-bold text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-sky-100"
+                    @change="changeCompany"
+                  >
+                    <option
+                      v-for="company in availableCompanies"
+                      :key="company.slug"
+                      :value="company.slug"
+                    >
+                      {{ company.name }} — {{ company.routes }}
+                    </option>
+                  </select>
+                </label>
+
+                <label class="block">
+                  <span class="mb-1.5 block text-xs font-black uppercase tracking-wide text-slate-500">
+                    Numéro de suivi
+                  </span>
                 <input
                   ref="trackingInput"
                   v-model="trackingCode"
@@ -484,6 +557,7 @@ onBeforeUnmount(() => {
                   placeholder="Ex: COL-1781180000"
                   @keyup.enter="search"
                 />
+                </label>
 
                 <button
                   class="h-14 w-full rounded-2xl bg-blue-700 px-5 text-base font-black text-white shadow-lg shadow-blue-700/25 transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
@@ -495,7 +569,8 @@ onBeforeUnmount(() => {
               </div>
 
               <p class="mt-4 text-sm leading-6 text-slate-500">
-                Les informations sont accessibles uniquement avec le lien entreprise et le numéro du colis.
+                Recherche chez <strong class="text-slate-700">{{ selectedCompany?.name }}</strong>.
+                Les informations sont accessibles uniquement avec l’entreprise et le numéro du colis.
               </p>
               <div v-if="recentSearches.length" class="mt-4 border-t border-slate-100 pt-4">
                 <p class="text-xs font-bold uppercase text-slate-400">Recherches récentes</p>
@@ -506,7 +581,7 @@ onBeforeUnmount(() => {
                     class="max-w-full truncate rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-sky-100 hover:text-blue-700"
                     @click="useRecentSearch(item)"
                   >
-                    {{ item.code }}
+                    {{ item.code }} · {{ availableCompanies.find(company => company.slug === item.slug)?.name || item.slug }}
                   </button>
                 </div>
               </div>
@@ -533,8 +608,22 @@ onBeforeUnmount(() => {
             <p class="text-lg font-black">Recherche impossible</p>
             <p class="mt-1 text-sm">{{ error }}</p>
             <p class="mt-3 text-sm text-red-500">
-              Vérifiez le numéro du bordereau ou utilisez le QR code généré depuis la fiche colis.
+              Vérifiez le numéro du bordereau et l’entreprise sélectionnée, ou utilisez le QR code généré depuis la fiche colis.
             </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <button
+                class="rounded-full bg-red-600 px-4 py-2 text-sm font-black text-white hover:bg-red-700"
+                @click="trackingInput?.focus()"
+              >
+                Corriger le numéro
+              </button>
+              <button
+                class="rounded-full border border-red-200 bg-white px-4 py-2 text-sm font-black text-red-700 hover:bg-red-50"
+                @click="companySelect?.focus()"
+              >
+                Changer d’entreprise
+              </button>
+            </div>
           </div>
 
           <div v-else-if="data" class="space-y-6">
