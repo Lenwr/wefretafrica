@@ -1,0 +1,20 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /publicTrackings/{trackingId} {
+      allow get: if resource.data.archived == false
+        && resource.data.revoked == false
+        && resource.data.schemaVersion == 1;
+      allow list, create, update, delete: if false;
+    }
+
+    match /tenantIntegrations/{tenantId} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

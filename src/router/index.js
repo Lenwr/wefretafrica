@@ -9,6 +9,11 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
+    {
+      path: '/suivi/:entrepriseSlug',
+      name: 'tracking',
+      component: HomeView,
+    },
   ],
 })
 
