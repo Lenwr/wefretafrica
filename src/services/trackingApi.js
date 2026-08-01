@@ -1,4 +1,5 @@
-const API_URL = String(import.meta.env.VITE_TRACKING_API_URL || '').replace(/\/$/, '')
+const DEFAULT_API_URL = 'https://europe-west1-rdsgestion-b3ec6.cloudfunctions.net/trackingApi'
+const API_URL = String(import.meta.env.VITE_TRACKING_API_URL || DEFAULT_API_URL).replace(/\/$/, '')
 
 export class TrackingApiError extends Error {
   constructor(code, status) {
