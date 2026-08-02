@@ -2,6 +2,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import QRCode from 'qrcode'
+import MaritimeTracking3D from '../components/MaritimeTracking3D.vue'
 import ParcelHero3D from '../components/ParcelHero3D.vue'
 import { getPublicTracking, TrackingApiError } from '../services/trackingApi'
 
@@ -17,7 +18,6 @@ const error = ref('')
 const loading = ref(false)
 const copied = ref(false)
 const qrCodeUrl = ref('')
-const recentSearches = ref([])
 const now = ref(Date.now())
 let refreshTimer
 let clockTimer
@@ -206,15 +206,6 @@ const buildTimeline = (docData, colisDetails) => {
   })
 }
 
-const rememberSearch = code => {
-  const entry = { code, slug: entrepriseSlug.value, searchedAt: Date.now() }
-  recentSearches.value = [
-    entry,
-    ...recentSearches.value.filter(item => item.code !== code || item.slug !== entry.slug)
-  ].slice(0, 5)
-  localStorage.setItem('tracksendRecentSearches', JSON.stringify(recentSearches.value))
-}
-
 const search = async (options = {}) => {
   const silent = options?.silent === true
   if (!silent) {
@@ -233,16 +224,21 @@ const search = async (options = {}) => {
 
     const docData = await getPublicTracking(entrepriseSlug.value, code)
     const colisDetails = normalizeColisDetails(docData.packages || [])
+    const departureEvent = (docData.events || []).find(event => event.status === 'IN_TRANSIT')
 
     data.value = {
       numero: docData.trackingNumber || code,
       etat: normalizeStatus(docData.shipment?.status),
+      statusCode: docData.shipment?.status || 'PENDING',
       lastUpdate: formatDate(docData.updatedAt),
       dateDepot: formatDate(docData.createdAt),
+      createdAt: docData.createdAt,
+      departureAt: departureEvent?.occurredAt || docData.shipment?.departureAt || null,
       timeline: buildTimeline(docData, colisDetails),
       colis: colisDetails,
       expediteur: docData.sender?.name || 'Non renseigné',
       destinataire: docData.recipient?.name || 'Non renseigné',
+      origin: docData.shipment?.origin || 'France',
       destination: docData.shipment?.destination || 'Non renseigné',
       typeDeFret: docData.shipment?.service || 'Non renseigné',
       nombreColis: colisDetails.reduce((sum, item) => sum + item.quantite, 0),
@@ -253,7 +249,6 @@ const search = async (options = {}) => {
     }
 
     document.title = `${data.value.numero} · TRACKSEND`
-    rememberSearch(data.value.numero)
     if (route.query.code !== data.value.numero) {
       await router.replace({
         name: 'tracking',
@@ -292,21 +287,10 @@ const search = async (options = {}) => {
 
 const colisList = computed(() => data.value?.colis || [])
 const timeline = computed(() => data.value?.timeline || [])
+const isMaritimeShipment = computed(() =>
+  String(data.value?.typeDeFret || '').toLowerCase().includes('maritime')
+)
 
-const reachedStepIndex = computed(() => {
-  let lastReached = -1
-
-  timeline.value.forEach((step, index) => {
-    if (step.started || step.done) lastReached = index
-  })
-
-  return lastReached
-})
-
-const lineFillWidth = computed(() => {
-  if (!timeline.value.length || reachedStepIndex.value <= 0) return '0%'
-  return `${(reachedStepIndex.value / (timeline.value.length - 1)) * 100}%`
-})
 const nextStep = computed(() => timeline.value.find(step => !step.done))
 const updatedAgo = computed(() => {
   const updatedAt = new Date(data.value?.updatedAt || 0).getTime()
@@ -332,18 +316,6 @@ const copyTrackingNumber = async () => {
   } catch {
     copied.value = false
   }
-}
-
-const useRecentSearch = async item => {
-  trackingCode.value = item.code
-  if (item.slug !== entrepriseSlug.value) {
-    await router.push({
-      name: 'tracking',
-      params: { entrepriseSlug: item.slug },
-      query: { code: item.code }
-    })
-  }
-  await search()
 }
 
 const changeCompany = async () => {
@@ -388,11 +360,7 @@ const calculerAerien = () => {
 }
 
 onMounted(() => {
-  try {
-    recentSearches.value = JSON.parse(localStorage.getItem('tracksendRecentSearches') || '[]')
-  } catch {
-    recentSearches.value = []
-  }
+  localStorage.removeItem('tracksendRecentSearches')
 
   let savedCalculator = {}
   try {
@@ -572,19 +540,6 @@ onBeforeUnmount(() => {
                 Recherche chez <strong class="text-slate-700">{{ selectedCompany?.name }}</strong>.
                 Les informations sont accessibles uniquement avec l’entreprise et le numéro du colis.
               </p>
-              <div v-if="recentSearches.length" class="mt-4 border-t border-slate-100 pt-4">
-                <p class="text-xs font-bold uppercase text-slate-400">Recherches récentes</p>
-                <div class="mt-2 flex flex-wrap gap-2">
-                  <button
-                    v-for="item in recentSearches"
-                    :key="`${item.slug}-${item.code}`"
-                    class="max-w-full truncate rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-sky-100 hover:text-blue-700"
-                    @click="useRecentSearch(item)"
-                  >
-                    {{ item.code }} · {{ availableCompanies.find(company => company.slug === item.slug)?.name || item.slug }}
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -695,47 +650,14 @@ onBeforeUnmount(() => {
               </div>
             </section>
 
-            <section class="rounded-3xl border border-sky-100 bg-white p-5 shadow-sm sm:p-6">
-              <h3 class="text-lg font-black">Avancement</h3>
-
-              <div class="relative mt-7">
-                <div class="absolute left-0 right-0 top-5 hidden h-1 rounded bg-slate-200 md:block"></div>
-                <div
-                  class="absolute left-0 top-5 hidden h-1 rounded bg-blue-600 transition-all md:block"
-                  :style="{ width: lineFillWidth }"
-                ></div>
-
-                <div class="grid gap-4 md:grid-cols-5">
-                  <div
-                    v-for="(step, index) in timeline"
-                    :key="step.status"
-                    class="relative rounded-xl border border-slate-200 bg-white p-4 md:border-0 md:p-0 md:text-center"
-                  >
-                    <div
-                      class="flex h-10 w-10 items-center justify-center rounded-full text-sm font-black text-white shadow-lg md:mx-auto"
-                      :class="step.done
-                        ? 'bg-emerald-600 shadow-emerald-200'
-                        : index <= reachedStepIndex
-                          ? 'bg-blue-600 shadow-blue-200'
-                          : 'bg-slate-300 shadow-slate-100'"
-                    >
-                      {{ index + 1 }}
-                    </div>
-                    <p class="mt-3 font-black">{{ step.status }}</p>
-                    <p class="mt-1 text-sm text-slate-500">
-                      {{ step.count }}/{{ step.total }} colis
-                    </p>
-                    <p v-if="step.date" class="mt-1 text-xs text-slate-400">
-                      {{ formatDate(step.date) }}
-                    </p>
-                    <p v-if="step.location" class="mt-1 text-xs font-semibold text-slate-500">
-                      {{ step.location }}
-                    </p>
-                    <p v-if="step.note" class="mt-1 text-xs text-slate-400">{{ step.note }}</p>
-                  </div>
-                </div>
-              </div>
-            </section>
+            <MaritimeTracking3D
+              v-if="isMaritimeShipment"
+              :origin="data.origin || 'France'"
+              :destination="data.destination"
+              :departure-at="data.departureAt"
+              :estimated-delivery-at="data.estimatedDeliveryAt"
+              :status="data.statusCode"
+            />
 
             <section class="grid gap-6 lg:grid-cols-[1fr_360px]">
               <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
