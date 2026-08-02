@@ -65,21 +65,21 @@ onBeforeUnmount(() => window.clearInterval(timer))
 
 <template>
   <section class="maritime-card overflow-hidden rounded-3xl border border-white/70 shadow-2xl shadow-blue-950/20">
-    <div class="relative min-h-[520px] bg-cover bg-center sm:min-h-[570px]" style="background-image: url('/maritime-route-3d.webp')">
+    <div class="maritime-map relative min-h-[460px] bg-cover bg-center sm:min-h-[570px]" style="background-image: url('/maritime-route-3d.webp')">
       <div class="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-slate-950/25"></div>
       <div class="ocean-light absolute inset-0"></div>
 
-      <div class="relative z-10 flex flex-wrap items-start justify-between gap-3 p-5 sm:p-8">
+      <div class="relative z-10 flex items-start justify-between gap-2 p-4 sm:p-8">
         <div>
           <p class="text-xs font-black uppercase tracking-[0.2em] text-blue-950/70">Progression estimée</p>
         </div>
-        <span class="rounded-full border border-white/80 bg-white/80 px-4 py-2 text-sm font-black uppercase text-blue-700 shadow-lg backdrop-blur">
+        <span class="shrink-0 rounded-full border border-white/80 bg-white/80 px-3 py-2 text-xs font-black uppercase text-blue-700 shadow-lg backdrop-blur sm:px-4 sm:text-sm">
           <span class="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-blue-500" :class="{ 'animate-pulse': isInTransit && progress < 100 }"></span>
           {{ visualStatus }}
         </span>
       </div>
 
-      <div class="absolute inset-x-4 top-32 bottom-36 sm:inset-x-8 sm:top-28 sm:bottom-40">
+      <div class="absolute inset-x-3 top-24 bottom-40 sm:inset-x-8 sm:top-28 sm:bottom-40">
         <div class="maritime-route" :aria-label="`Trajet maritime parcouru à ${roundedProgress} %`">
           <div class="route-node">
             <div class="route-icon" :class="{ 'route-icon-completed': progress > 0 }">
@@ -112,24 +112,24 @@ onBeforeUnmount(() => window.clearInterval(timer))
         </div>
       </div>
 
-      <div class="absolute inset-x-4 bottom-4 z-20 rounded-3xl border border-white/70 bg-white/85 p-4 shadow-2xl backdrop-blur-xl sm:inset-x-8 sm:bottom-7 sm:p-6">
-        <div class="grid items-center gap-4 sm:grid-cols-[1fr_auto]">
+      <div class="absolute inset-x-3 bottom-3 z-20 rounded-2xl border border-white/70 bg-white/90 p-3 shadow-2xl backdrop-blur-xl sm:inset-x-8 sm:bottom-7 sm:rounded-3xl sm:p-6">
+        <div class="grid grid-cols-[1fr_auto] items-center gap-3 sm:gap-4">
           <div>
             <div class="flex items-center justify-between gap-3 text-sm font-black text-blue-950">
               <span>Progression {{ roundedProgress }} %</span>
-              <span v-if="daysRemaining !== null" class="text-blue-700">{{ daysRemaining }} j restant<span v-if="daysRemaining > 1">s</span></span>
+              <span v-if="daysRemaining !== null" class="whitespace-nowrap text-blue-700">{{ daysRemaining }} j restant<span v-if="daysRemaining > 1">s</span></span>
             </div>
             <div class="mt-3 h-3 overflow-hidden rounded-full bg-slate-200 shadow-inner">
               <div class="h-full rounded-full bg-gradient-to-r from-blue-700 via-sky-500 to-cyan-300 transition-all duration-1000" :style="{ width: `${progress}%` }"></div>
             </div>
             <div class="mt-2 flex justify-between text-xs font-bold text-slate-500"><span>0 %</span><span>50 %</span><span>100 %</span></div>
           </div>
-          <div class="border-slate-200 sm:min-w-56 sm:border-l sm:pl-6">
+          <div class="border-l border-slate-200 pl-3 sm:min-w-56 sm:pl-6">
             <p class="text-xs font-black uppercase text-emerald-700">Arrivée estimée</p>
-            <p class="mt-1 text-lg font-black text-emerald-800">{{ formattedArrival }}</p>
+            <p class="mt-1 text-sm font-black text-emerald-800 sm:text-lg">{{ formattedArrival }}</p>
           </div>
         </div>
-        <p class="mt-3 text-[11px] font-semibold text-slate-500">
+        <p class="mt-3 hidden text-[11px] font-semibold text-slate-500 sm:block">
           Position calculée selon les dates de départ et d’arrivée estimée — ce visuel ne représente pas une position GPS réelle.
         </p>
       </div>
@@ -152,5 +152,11 @@ onBeforeUnmount(() => window.clearInterval(timer))
 .ocean-light { background: linear-gradient(110deg, transparent 25%, rgb(255 255 255 / .13) 46%, transparent 65%); background-size: 220% 100%; animation: ocean-shimmer 9s ease-in-out infinite; mix-blend-mode: screen; }
 @keyframes ocean-shimmer { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
 @media (prefers-reduced-motion: reduce) { .ocean-light { animation: none; } .route-progress { transition: none; } }
-@media (max-width: 640px) { .maritime-route { inset: 30% 12% auto 4%; transform: rotate(4deg); } .route-icon { width: 34px; height: 34px; border-width: 3px; transform: rotate(-4deg); } .route-icon svg { width: 18px; height: 18px; } .route-label { max-width: 138px; transform: rotate(-4deg); white-space: normal; } }
+@media (max-width: 640px) {
+  .maritime-map { background-size: 100% 100%; }
+  .maritime-route { inset: 26% 7% auto 5%; transform: rotate(4deg); }
+  .route-icon { width: 32px; height: 32px; border-width: 2px; transform: rotate(-4deg); }
+  .route-icon svg { width: 17px; height: 17px; }
+  .route-label { top: calc(100% + 8px); max-width: 116px; gap: 5px; padding: 7px 8px; font-size: 10px; transform: rotate(-4deg); white-space: normal; }
+}
 </style>
