@@ -1,7 +1,6 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import QRCode from 'qrcode'
 import MaritimeTracking3D from '../components/MaritimeTracking3D.vue'
 import ParcelHero3D from '../components/ParcelHero3D.vue'
 import { getPublicTracking, TrackingApiError } from '../services/trackingApi'
@@ -17,7 +16,6 @@ const data = ref(null)
 const error = ref('')
 const loading = ref(false)
 const copied = ref(false)
-const qrCodeUrl = ref('')
 const now = ref(Date.now())
 let refreshTimer
 let clockTimer
@@ -256,12 +254,6 @@ const search = async (options = {}) => {
         query: { code: data.value.numero }
       })
     }
-    qrCodeUrl.value = await QRCode.toDataURL(publicTrackingUrl.value, {
-      width: 240,
-      margin: 1,
-      color: { dark: '#0f2f5f', light: '#ffffff' }
-    })
-
     if (!silent) {
       await nextTick()
       const top = resultsSection.value?.getBoundingClientRect().top + window.scrollY - 88
@@ -321,7 +313,6 @@ const copyTrackingNumber = async () => {
 const changeCompany = async () => {
   error.value = ''
   data.value = null
-  qrCodeUrl.value = ''
   await router.replace({
     name: 'tracking',
     params: { entrepriseSlug: selectedCompanySlug.value },
@@ -722,12 +713,6 @@ onBeforeUnmount(() => {
                       WhatsApp
                     </a>
                   </div>
-                </div>
-
-                <div class="mt-5 rounded-2xl border border-sky-100 p-4 text-center">
-                  <p class="text-xs font-bold uppercase text-blue-700">QR code du suivi</p>
-                  <img v-if="qrCodeUrl" :src="qrCodeUrl" alt="QR code du suivi" class="mx-auto mt-2 h-36 w-36" />
-                  <p class="mt-2 text-xs text-slate-500">Scannez pour rouvrir ce colis.</p>
                 </div>
 
                 <a
