@@ -31,6 +31,11 @@ const estimationAerien = ref(null)
 
 const agencyPhone = '0676492528'
 const agencyPhoneInternational = '+33676492528'
+const togoPickupContacts = [
+  { name: 'Mouda', phone: '+228 90 29 15 65', international: '+22890291565' },
+  { name: 'Abou CAMARA', phone: '+33 6 03 67 50 62', international: '+33603675062' },
+  { name: 'Mathieu Aaron Travel', phone: '+33 6 22 07 74 94', international: '+33622077494' }
+]
 
 const tarifsDestination = {
   Togo: 500,
@@ -280,6 +285,13 @@ const timeline = computed(() => data.value?.timeline || [])
 const isMaritimeShipment = computed(() =>
   String(data.value?.typeDeFret || '').toLowerCase().includes('maritime')
 )
+const showTogoPickupContacts = computed(() => {
+  const destination = String(data.value?.destination || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+  return entrepriseSlug.value === 'aaron-travel' && (destination.includes('togo') || destination.includes('lome'))
+})
 
 const nextStep = computed(() => timeline.value.find(step => !step.done))
 const aerienFormula = computed(() =>
@@ -679,7 +691,40 @@ onBeforeUnmount(() => {
                   </div>
                 </dl>
 
-                <div class="mt-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-sky-50 p-4">
+                <div v-if="showTogoPickupContacts" class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                  <p class="text-xs font-bold uppercase tracking-wide text-amber-700">Retrait au Togo</p>
+                  <h4 class="mt-1 font-black text-slate-950">Contacts pour récupérer votre colis</h4>
+                  <div class="mt-3 space-y-3">
+                    <article
+                      v-for="contact in togoPickupContacts"
+                      :key="contact.international"
+                      class="rounded-xl border border-amber-100 bg-white p-3"
+                    >
+                      <p class="font-black text-slate-950">{{ contact.name }}</p>
+                      <a :href="`tel:${contact.international}`" class="mt-0.5 block text-sm font-bold text-blue-700">
+                        {{ contact.phone }}
+                      </a>
+                      <div class="mt-2 grid grid-cols-2 gap-2">
+                        <a
+                          :href="`tel:${contact.international}`"
+                          class="rounded-lg bg-slate-950 px-3 py-2 text-center text-xs font-black text-white"
+                        >
+                          Appeler
+                        </a>
+                        <a
+                          :href="`https://wa.me/${contact.international.replace('+', '')}`"
+                          target="_blank"
+                          rel="noopener"
+                          class="rounded-lg bg-emerald-600 px-3 py-2 text-center text-xs font-black text-white"
+                        >
+                          WhatsApp
+                        </a>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+
+                <div class="mt-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-sky-50 p-4">
                   <p class="text-xs font-bold uppercase text-slate-400">Agence</p>
                   <p class="mt-1 text-lg font-black">{{ agencyPhone }}</p>
                   <div class="mt-3 grid grid-cols-2 gap-2">
