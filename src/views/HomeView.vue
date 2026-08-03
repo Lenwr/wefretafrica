@@ -16,9 +16,7 @@ const data = ref(null)
 const error = ref('')
 const loading = ref(false)
 const copied = ref(false)
-const now = ref(Date.now())
 let refreshTimer
-let clockTimer
 
 const longueur = ref('')
 const largeur = ref('')
@@ -223,15 +221,16 @@ const search = async (options = {}) => {
     const docData = await getPublicTracking(entrepriseSlug.value, code)
     const colisDetails = normalizeColisDetails(docData.packages || [])
     const departureEvent = (docData.events || []).find(event => event.status === 'IN_TRANSIT')
+    const departureAt = departureEvent?.occurredAt || docData.shipment?.departureAt || null
 
     data.value = {
       numero: docData.trackingNumber || code,
       etat: normalizeStatus(docData.shipment?.status),
       statusCode: docData.shipment?.status || 'PENDING',
-      lastUpdate: formatDate(docData.updatedAt),
       dateDepot: formatDate(docData.createdAt),
       createdAt: docData.createdAt,
-      departureAt: departureEvent?.occurredAt || docData.shipment?.departureAt || null,
+      departureAt,
+      departureDate: departureAt ? formatDate(departureAt) : 'À confirmer',
       timeline: buildTimeline(docData, colisDetails),
       colis: colisDetails,
       expediteur: docData.sender?.name || 'Non renseigné',
@@ -242,7 +241,6 @@ const search = async (options = {}) => {
       nombreColis: colisDetails.reduce((sum, item) => sum + item.quantite, 0),
       poidsTotal: colisDetails.reduce((sum, item) => sum + item.poids, 0),
       estimatedDeliveryAt: docData.shipment?.estimatedDeliveryAt || null,
-      updatedAt: docData.updatedAt,
       companyName: docData.company?.name || ''
     }
 
@@ -284,16 +282,6 @@ const isMaritimeShipment = computed(() =>
 )
 
 const nextStep = computed(() => timeline.value.find(step => !step.done))
-const updatedAgo = computed(() => {
-  const updatedAt = new Date(data.value?.updatedAt || 0).getTime()
-  if (!updatedAt) return ''
-  const minutes = Math.max(0, Math.floor((now.value - updatedAt) / 60000))
-  if (minutes < 1) return 'à l’instant'
-  if (minutes < 60) return `il y a ${minutes} min`
-  const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `il y a ${hours} h`
-  return `il y a ${Math.floor(hours / 24)} j`
-})
 const aerienFormula = computed(() =>
   estimationAerien.value === null
     ? ''
@@ -363,7 +351,6 @@ onMounted(() => {
   destinationAerienne.value = savedCalculator.destinationAerienne || destinationAerienne.value
   estimationMode.value = savedCalculator.estimationMode || estimationMode.value
 
-  clockTimer = window.setInterval(() => { now.value = Date.now() }, 30000)
   refreshTimer = window.setInterval(() => {
     if (data.value && !loading.value) search({ silent: true })
   }, 60000)
@@ -405,7 +392,6 @@ watch([longueur, largeur, hauteur, destinationCalcul], () => {
 
 onBeforeUnmount(() => {
   window.clearInterval(refreshTimer)
-  window.clearInterval(clockTimer)
   document.title = 'TRACKSEND · Suivi de colis'
 })
 </script>
@@ -581,8 +567,7 @@ onBeforeUnmount(() => {
                     {{ data.destination }}
                   </h2>
                   <p class="mt-2 text-sm text-slate-500">
-                    Dernière mise à jour : <span class="font-bold text-slate-700">{{ data.lastUpdate }}</span>
-                    <span v-if="updatedAgo" class="ml-1 text-sky-700">({{ updatedAgo }})</span>
+                    Départ du conteneur : <span class="font-bold text-slate-700">{{ data.departureDate }}</span>
                   </p>
                 </div>
 
