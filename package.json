@@ -1,0 +1,1 @@
+{"name":"wefretafrica-nuxt-starter","private":true,"type":"module","scripts":{"dev":"nuxt dev","build":"nuxt build","generate":"nuxt generate","preview":"nuxt preview"},"dependencies":{"firebase":"^12.18.0","nuxt":"^4.0.3","vue":"^3.5.18","vue-router":"^4.5.1"}}

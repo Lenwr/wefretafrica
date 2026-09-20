@@ -1,0 +1,1 @@
+<template><NuxtPage /><PublicAssistant /></template>
