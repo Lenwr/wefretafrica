@@ -1,0 +1,12 @@
+# Visuels de l’accueil
+
+Générés avec l’outil intégré imagegen. Images d’illustration synthétiques, sans représenter un client ou dépôt réel. Versions WebP optimisées intégrées à l’accueil.
+
+## public/destination-abidjan.webp
+
+Use case: photorealistic-natural. Asset: landscape 3:2 destination card for Abidjan on a France–Africa parcel shipping website. Create one candid documentary-style photograph: an Ivorian woman about 40 wearing an ordinary light cotton blouse standing beside a small street-facing shop counter in a contemporary residential district of Abidjan, checking a plain brown parcel resting on the counter. Background suggests an everyday leafy Abidjan street with low-rise concrete buildings, a distant modern skyline subtly visible, no identifiable business or claimed real depot. Medium-wide eye-level 35mm photograph, subject and parcel within central area for responsive crop. Soft overcast tropical daylight, realistic imperfect skin, ordinary clothes, slightly scuffed cardboard, quiet unposed expression, restrained true-to-life colors, natural depth of field. Avoid delivery-man-in-navy handing-box-to-smiling-woman trope, golden-hour gloss, cinematic lighting, airbrushed faces, exaggerated smiles, HDR, oversaturation, fake bokeh, distorted hands, text, logos, watermarks. This is an illustrative scene, not a photograph of an actual company customer.
+
+## public/preparation-colis-domicile.webp
+
+Use case: photorealistic-natural. Asset: portrait 4:5 illustration for 'How it works' parcel shipping website section. Create a candid editorial photograph in a modest everyday French apartment dining room: a Black adult man wearing a plain muted olive shirt preparing a parcel on a wooden table, seen from a slightly elevated three-quarter side angle. Main action is carefully sealing a normal brown cardboard box with packing tape. A folded sweater, a small roll of tape and plain packing paper are nearby; simple apartment window and chair in background. One person only, not looking at camera, no staged delivery handover, no uniforms. Realistic hands, natural skin texture, small everyday imperfections, subdued neutral colors, diffuse daylight from window, believable proportions, 35mm documentary photography. Keep subject and box centered for cropping. Avoid advertising gloss, cinematic orange light, perfect showroom interiors, airbrushing, HDR, artificial smiles, excessive blur, readable text, labels, brands and watermarks. Illustrative image, do not imply a real customer or a company depot.
+

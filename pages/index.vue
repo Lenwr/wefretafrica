@@ -1,16 +1,19 @@
 <script setup lang="ts">
-useSeoMeta({ title: 'Envoi de colis vers l’Afrique | WefretAfrica', description: 'Fret aérien et maritime depuis la France vers le Togo, le Bénin et de nombreuses destinations africaines.', ogTitle: 'WefretAfrica — La France vers l’Afrique', ogDescription: 'Envoyez vos colis vers de nombreuses destinations africaines.', ogType: 'website', ogLocale: 'fr_FR' })
+usePageSeo('Envoi de colis vers l’Afrique | WefretAfrica', 'Fret aérien et maritime depuis la France vers le Togo, le Bénin et de nombreuses destinations africaines.')
 useHead({ link: [{ rel: 'canonical', href: 'https://www.wefretafrica.com/' }, { rel: 'preload', as: 'image', href: '/hero-premium.webp', type: 'image/webp', fetchpriority: 'high' }], script: [{ type: 'application/ld+json', innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: 'WefretAfrica', url: 'https://www.wefretafrica.com/', logo: 'https://www.wefretafrica.com/logo.png', telephone: '+33676492528', description: 'Service de fret aérien et maritime depuis la France vers le Togo, le Bénin et l’Afrique de l’Ouest.', location: [{ '@type': 'Place', name: 'Bureau WefretAfrica Le Thillay', address: { '@type': 'PostalAddress', streetAddress: '15 Rue des Écoles', postalCode: '95500', addressLocality: 'Le Thillay', addressCountry: 'FR' } }, { '@type': 'Place', name: 'Agence de Lille-Wazemmes', telephone: '+33676492528', email: 'lille.denamko@gmail.com', address: { '@type': 'PostalAddress', streetAddress: '96 rue Jules Guesde', postalCode: '59000', addressLocality: 'Lille', addressCountry: 'FR' } }], areaServed: ['Île-de-France', 'Lille', 'Métropole Européenne de Lille', 'Lyon', 'Métropole de Lyon', 'Togo', 'Bénin', 'Afrique de l’Ouest'] }) }] })
 const services = [['✈', 'Fret aérien', 'Une solution rapide pour vos colis urgents vers Lomé, Cotonou et nos autres destinations.', '/fret-aerien'], ['▰', 'Fret maritime', 'Expédiez vos colis et effets personnels à prix maîtrisé, avec un suivi clair à chaque étape.', '/fret-maritime'], ['⌂', 'Enlèvement à domicile', 'Nous récupérons vos colis en Île-de-France, à Lille et à Lyon, sur rendez-vous.', '/devis-en-ligne']]
 const faqs = [['Quels types de colis puis-je envoyer ?', 'Effets personnels, vêtements, électroménager et marchandises autorisées.'], ['Comment suivre mon colis ?', 'Un numéro de suivi vous permet de consulter l’avancement de votre envoi.'], ['Fret aérien ou maritime : que choisir ?', 'L’aérien privilégie la rapidité. Le maritime est plus économique pour les volumes importants.']]
+useFaqSchema(faqs)
 const destinations = [
   { country: 'Togo', city: 'Lomé', image: '/lome-premium.webp', to: '/envois-colis-paris-lome' },
   { country: 'Bénin', city: 'Cotonou', image: '/cotonou-premium.webp', to: '/envois-colis-paris-cotonou' },
+  { country: 'Côte d’Ivoire', city: 'Abidjan', image: '/destination-abidjan.webp', to: `/devis-en-ligne?destination=${encodeURIComponent('Abidjan / Côte d’Ivoire')}` },
   { country: 'Congo-Brazzaville', city: 'Brazzaville', image: '/destination-congo-brazzaville.webp' },
-  { country: 'Sénégal', city: 'Dakar', image: '/destination-senegal.webp' },
+  { country: 'Sénégal', city: 'Dakar', image: '/destination-senegal.webp', to: '/envoi-colis-france-dakar' },
+  { country: 'Cameroun', city: 'Douala & Yaoundé', image: '/destination-cameroun.webp', to: '/envoi-colis-france-cameroun' },
   { country: 'Guinée', city: 'Conakry', image: '/destination-guinee.webp' },
   { country: 'Comores', city: 'Comores', image: '/destination-comores.webp' },
-  { country: 'Autres destinations', city: '', image: '/destination-autres.webp' }
+  { country: 'Autres destinations', city: '', image: '/destination-entrepot.webp' }
 ]
 const destinationLink = (destination: typeof destinations[number]) => destination.to || `/devis-en-ligne?destination=${encodeURIComponent(destination.country)}`
 </script>
@@ -132,7 +135,7 @@ const destinationLink = (destination: typeof destinations[number]) => destinatio
       </article>
     </section>
     <DepartureSchedule />
-    <section id="process" class="process"><img src="/fret-maritime-premium.webp" alt="Cliente préparant un envoi"
+    <section id="process" class="process"><img src="/preparation-colis-domicile.webp" alt="Préparation d’un carton à domicile avant son expédition"
         loading="lazy" decoding="async">
       <div>
         <p class="kicker">Comment ça marche ?</p>
@@ -201,28 +204,15 @@ const destinationLink = (destination: typeof destinations[number]) => destinatio
         </details>
       </div>
     </section>
+    <section class="review-banner">
+      <div><p class="kicker">Votre avis nous aide</p><h2>Un service apprécié ? <em>dites-le sur Google.</em></h2></div>
+      <a class="btn" href="https://g.page/r/CZ9JT5M825kgEAE/review" target="_blank" rel="noopener">Donner mon avis →</a>
+    </section>
     <section class="cta">
       <h2>Votre colis mérite un trajet <em>bien accompagné.</em></h2><a class="btn white" href="#calculateur">Estimer
         mon envoi →</a>
     </section>
-    <footer>
-      <div class="footer-main">
-        <div>
-          <div class="brand"><img src="/logo.png" alt=""><b>WeFret<span>Africa</span></b></div>
-          <p>Votre partenaire pour l’envoi de colis entre la France et de nombreuses destinations africaines.</p>
-        </div>
-        <div class="footer-contact"><b>Nos bureaux</b><a href="tel:+33676492528">Téléphone : 06 76 49 25 28</a><a
-            href="https://www.google.com/maps/search/?api=1&query=15+Rue+des+Écoles+95500+Le+Thillay" target="_blank"
-            rel="noopener">15 Rue des Écoles<br>95500 Le Thillay, France</a><a
-            href="https://www.google.com/maps/search/?api=1&query=96+Rue+Jules+Guesde+59000+Lille" target="_blank"
-            rel="noopener">96 rue Jules Guesde<br>59000 Lille–Wazemmes</a><a
-            href="mailto:lille.denamko@gmail.com">lille.denamko@gmail.com</a></div>
-        <div class="footer-contact"><b>Liens rapides</b><a href="#calculateur">Calculer un tarif</a>
-          <NuxtLink to="/devis-en-ligne">Demander un devis</NuxtLink><a href="#departs">Prochains départs</a>
-          <NuxtLink to="/blog">Blog</NuxtLink>
-        </div>
-      </div><small>© 2026 WefretAfrica. Tous droits réservés.</small>
-    </footer>
+    <SiteFooter />
     <NuxtLink class="mobile-quote" to="/devis-en-ligne">Demander un devis</NuxtLink>
   </main>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+definePageMeta({ key: route => route.path })
 const route = useRoute()
 
 const slug = Array.isArray(route.params.slug)
@@ -36,12 +37,16 @@ const freightPages: Record<string, PageContent> = {
       {
         title: 'Une expédition simple',
         text:
-          'Indiquez la destination, la nature et le poids du colis. Nous confirmons le tarif, réceptionnons ou collectons votre envoi, puis vous tenons informé jusqu’à sa remise.'
+          'Indiquez la destination, la nature et le poids du colis. Nous confirmons le tarif, réceptionnons ou collectons votre envoi, puis vous tenons informé jusqu’à sa remise. Pour préparer la demande, pesez le carton fermé et relevez sa longueur, sa largeur et sa hauteur. Un colis léger mais encombrant peut être évalué selon son poids volumétrique. Signalez les appareils électroniques afin que leur prise en charge soit étudiée séparément.'
       },
       {
         title: 'Achats en ligne',
         text:
           'Vous souhaitez acheter sur une boutique en ligne et expédier vos colis par fret aérien ? Faites livrer vos commandes directement à notre dépôt en France. Adresse de livraison : 15 Rue des écoles, 95500 Le Thillay. Lors de votre commande, renseignez votre nom sous la forme « WefretAfrica_Votre nom ». Nous réceptionnons ensuite vos achats avant de les réexpédier vers votre destination.'
+      },
+      {
+        title: 'Choisir selon votre besoin',
+        text: 'Un envoi urgent de vêtements ou de petits équipements ne se prépare pas comme un déménagement. Indiquez la date de réception souhaitée et la destination dès le premier contact. Si votre envoi comprend aussi des cartons volumineux ou du mobilier, comparez la solution maritime avant de confirmer le transport. Préparez les coordonnées complètes du destinataire pour faciliter la remise à l’arrivée.'
       }
     ],
 
@@ -90,12 +95,12 @@ const freightPages: Record<string, PageContent> = {
       {
         title: 'Préparez à votre rythme',
         text:
-          'Nous pouvons vous fournir un emballage adapté. Chaque colis doit porter les coordonnées de l’expéditeur, du destinataire et la destination complète.'
+          'Nous pouvons vous fournir un emballage adapté. Chaque colis doit porter les coordonnées de l’expéditeur, du destinataire et la destination complète. Préparez aussi une liste de son contenu et relevez ses dimensions. Ces informations permettent de décrire précisément un carton, une barrique ou un meuble dans votre demande de devis. Signalez les objets fragiles et les appareils électroniques avant la remise du colis.'
       },
       {
         title: 'Collecte sur rendez-vous',
         text:
-          'Une fois le colis prêt, planifiez un enlèvement en Île-de-France, à Lille, dans la métropole lilloise ou à Lyon. En dehors de ces zones, nous étudions avec vous la meilleure solution.'
+          'Une fois le colis prêt, planifiez un enlèvement en Île-de-France, à Lille, dans la métropole lilloise ou à Lyon. En dehors de ces zones, nous étudions avec vous la meilleure solution. Le délai d’acheminement annoncé se compte à partir du départ du bateau : il faut donc distinguer la date de collecte en France et celle de l’expédition. Contactez l’équipe pour organiser la remise de vos colis en fonction du prochain départ confirmé.'
       }
     ],
 
@@ -240,6 +245,126 @@ const freightPages: Record<string, PageContent> = {
       [
         'Quels renseignements fournir ?',
         'La destination, le contenu, les dimensions, le poids approximatif et l’adresse de collecte.'
+      ]
+    ]
+  },
+
+  'envoi-colis-france-dakar': {
+    eyebrow: 'France → Sénégal',
+    title: 'Envoyer un colis de France vers Dakar',
+    intro:
+      'WefretAfrica organise vos envois aériens et maritimes vers Dakar, avec des départs chaque semaine et un retrait à Yoff.',
+    image: '/destination-senegal.webp',
+    imageAlt: 'Vue de Dakar au Sénégal, destination des colis WefretAfrica',
+
+    sections: [
+      {
+        title: 'Fret aérien vers Dakar',
+        text:
+          'Envoyez vos colis par avion à 12 € par kilogramme. Le délai indicatif est de 3 à 5 jours. Les colis doivent être déposés 48 heures avant le départ et les départs ont lieu chaque semaine. Nous confirmons le tarif final après vérification du poids, du volume et du contenu.'
+      },
+      {
+        title: 'Fret maritime vers Dakar',
+        text:
+          'Expédiez votre carton standard de 67 × 54 × 54 cm pour 100 €, ou votre fût ou barrique pour 120 €. Le délai d’acheminement indicatif est de 45 jours, avec des départs chaque semaine.'
+      },
+      {
+        title: 'Retrait à Yoff',
+        text:
+          'Retirez vos colis à notre point de retrait de Yoff, à Dakar. Le destinataire doit présenter une pièce d’identité. L’équipe WefretAfrica confirme les coordonnées pratiques et la disponibilité du colis avant le déplacement.'
+      }
+    ],
+
+    features: [
+      {
+        icon: '✈',
+        title: 'Aérien · 12 €/kg',
+        text: 'Délai indicatif de 3 à 5 jours, dépôt 48 h avant le départ.'
+      },
+      {
+        icon: '▰',
+        title: 'Maritime · dès 100 €',
+        text: 'Carton standard à 100 €, fût ou barrique à 120 €, délai indicatif de 45 jours.'
+      },
+      {
+        icon: '⌖',
+        title: 'Retrait à Yoff',
+        text: 'Retrait sur présentation d’une pièce d’identité, après confirmation de disponibilité.'
+      }
+    ],
+
+    faq: [
+      [
+        'À quelle fréquence partent les envois vers Dakar ?',
+        'Nos départs aériens et maritimes vers Dakar ont lieu chaque semaine. Contactez-nous pour confirmer la prochaine date.'
+      ],
+      [
+        'Quels documents faut-il pour retirer un colis ?',
+        'Une pièce d’identité est demandée au retrait. Nous vous transmettons les informations pratiques avant le déplacement.'
+      ],
+      [
+        'Quelle monnaie est utilisée sur place ?',
+        'La monnaie utilisée au Sénégal est le franc CFA.'
+      ]
+    ]
+  },
+
+  'envoi-colis-france-cameroun': {
+    eyebrow: 'France → Cameroun',
+    title: 'Envoyer un colis de France vers le Cameroun',
+    intro:
+      'WefretAfrica dessert Douala et Yaoundé par fret aérien et maritime, avec un retrait à Bonamoussadi pour Douala et à Total Biteng pour Yaoundé.',
+    image: '/destination-cameroun.webp',
+    imageAlt: 'Expédition de colis de la France vers le Cameroun avec WefretAfrica',
+
+    sections: [
+      {
+        title: 'Fret aérien vers Douala et Yaoundé',
+        text:
+          'Envoyez vos colis par avion à 13 € par kilogramme, avec un minimum facturé de 5 kg. Le délai indicatif est de 5 jours et le colis doit être déposé 72 heures avant le départ. Des restrictions s’appliquent notamment à l’alcool, aux téléphones et aux batteries : contactez-nous avant tout dépôt.'
+      },
+      {
+        title: 'Fret maritime vers le Cameroun',
+        text:
+          'Expédiez vos colis hors format standard par bateau à 850 € par m³. Le délai d’acheminement indicatif est de 45 jours et les départs ont lieu tous les mois. Pour un carton ou un fût, contactez-nous pour obtenir votre devis.'
+      },
+      {
+        title: 'Remise à destination et formalités',
+        text:
+          'Retirez vos colis à Bonamoussadi à Douala ou à Total Biteng à Yaoundé. Une pièce d’identité est demandée. Certaines marchandises, notamment l’alcool, les médicaments et les huiles, nécessitent une vérification préalable. Les frais de douane ne sont pas facturés au destinataire.'
+      }
+    ],
+
+    features: [
+      {
+        icon: '✈',
+        title: 'Aérien · 13 €/kg',
+        text: 'Minimum 5 kg, délai indicatif de 5 jours et dépôt 72 h avant le départ.'
+      },
+      {
+        icon: '▰',
+        title: 'Maritime · 850 €/m³',
+        text: 'Délai indicatif de 45 jours et départ chaque mois.'
+      },
+      {
+        icon: '⌖',
+        title: 'Douala & Yaoundé',
+        text: 'Retirez vos colis à Bonamoussadi ou à Total Biteng.'
+      }
+    ],
+
+    faq: [
+      [
+        'Où récupérer un colis au Cameroun ?',
+        'Vous pouvez récupérer vos colis à Bonamoussadi à Douala ou à Total Biteng à Yaoundé. L’adresse exacte et les horaires sont confirmés par l’équipe avant le retrait.'
+      ],
+      [
+        'Quels produits doivent être signalés avant l’envoi ?',
+        'Signalez notamment l’alcool, les téléphones, les batteries, les médicaments et les huiles afin que leur admissibilité soit vérifiée avant le dépôt.'
+      ],
+      [
+        'Quel document présenter au retrait ?',
+        'Une pièce d’identité est demandée au retrait du colis.'
       ]
     ]
   },
@@ -476,14 +601,9 @@ const guideSlugs = new Set([
 ])
 
 const isGuide = guideSlugs.has(slug)
+useFaqSchema(page.faq)
 
-useSeoMeta({
-  title: `${page.title} | WefretAfrica`,
-  description: page.intro,
-  ogTitle: page.title,
-  ogDescription: page.intro,
-  ogType: 'website'
-})
+usePageSeo(`${page.title} | WefretAfrica`, page.intro, page.image)
 
 useHead({
   link: [
@@ -680,8 +800,13 @@ useHead({
 
         <p>
           Pour les envois par bateau uniquement, les colis sont à récupérer
-          dans notre dépôt situé vers
-          <strong>Adéwui, à côté du bar 3/4</strong>.
+          à notre dépôt à Lomé :<br>
+          <strong>STE AFRILEAD LOGISTIC</strong><br>
+          📞 <a href="tel:+22892740302">92 74 03 02</a><br>
+          Boulevard de la Kara, vers Adéwui, face Bar TAM TAM
+        </p>
+
+        <p>
           Notre équipe vous informe dès que votre colis est disponible au
           retrait.
         </p>
@@ -912,40 +1037,6 @@ useHead({
     </section>
 
     <!-- FOOTER -->
-    <footer>
-      <div class="brand">
-        <img
-          src="/logo.png"
-          alt=""
-        >
-
-        <b>
-          WeFret<span>Africa</span>
-        </b>
-      </div>
-
-      <p>
-        Votre partenaire pour l’envoi de colis entre la France et l’Afrique
-        de l’Ouest.
-      </p>
-
-      <div class="footer-links">
-        <NuxtLink to="/fret-aerien">
-          Fret aérien
-        </NuxtLink>
-
-        <NuxtLink to="/fret-maritime">
-          Fret maritime
-        </NuxtLink>
-
-        <NuxtLink to="/blog">
-          Blog
-        </NuxtLink>
-      </div>
-
-      <small>
-        © 2026 WefretAfrica. Tous droits réservés.
-      </small>
-    </footer>
+    <SiteFooter />
   </main>
 </template>
