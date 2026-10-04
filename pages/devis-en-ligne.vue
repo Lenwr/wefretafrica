@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 const route = useRoute()
 usePageSeo('Demander un devis | WefretAfrica', 'Recevez un devis personnalisé pour votre envoi vers le Togo, le Bénin ou un autre pays d’Afrique de l’Ouest.')
 useHead({link:[{rel:'canonical',href:'https://www.wefretafrica.com/devis-en-ligne'}]})
@@ -19,19 +18,7 @@ const error=ref('')
 async function submit(){
   sending.value=true; error.value=''; success.value=false
   try{
-    const { $firestore } = useNuxtApp()
-    const firebaseSave = addDoc(collection($firestore as any, 'wefretafrica_demandes_devis'), {
-      name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim(),
-      destination: form.destination, transport: form.transport, parcelType: form.parcelType,
-      measurement: form.measurement.trim(), pickup: form.pickup, city: form.city.trim(),
-      message: form.message.trim(), cta: form.cta, from: form.from, status: 'nouveau', source: 'site-wefretafrica',
-      createdAt: serverTimestamp()
-    })
-    const emailSave = $fetch('/api/devis',{method:'POST',body:form})
-    const [firebaseResult, emailResult] = await Promise.allSettled([firebaseSave, emailSave])
-    if (firebaseResult.status === 'rejected') console.error('Firebase n’a pas accepté la demande.', firebaseResult.reason)
-    if (emailResult.status === 'rejected') console.error('La copie e-mail du devis n’a pas pu être envoyée.', emailResult.reason)
-    if (firebaseResult.status === 'rejected' && emailResult.status === 'rejected') throw firebaseResult.reason
+    await $fetch('/api/devis',{method:'POST',body:form})
     success.value=true
   }
   catch(e:any){ error.value=e?.data?.statusMessage || 'Impossible d’envoyer la demande. Réessayez ou contactez-nous directement.' }
