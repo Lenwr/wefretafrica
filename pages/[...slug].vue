@@ -846,7 +846,7 @@ useHead({
       v-if="slug === 'envois-colis-paris-cotonou'"
       class="transport-notice"
     >
-      <span>1,5 mois</span>
+      <span>1,5–2 mois</span>
 
       <div>
         <p class="kicker">
@@ -859,7 +859,7 @@ useHead({
         </h2>
 
         <p>
-          Prévoyez environ un mois et demi d’acheminement maritime à compter
+          Prévoyez environ un mois et demi à deux mois d’acheminement maritime à compter
           du départ. En aérien, le délai indicatif est de 5 jours.
         </p>
       </div>

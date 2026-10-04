@@ -8,7 +8,7 @@ useHead({ link: [{ rel: 'canonical', href: 'https://www.wefretafrica.com/tarifs-
 const standardRates = [
   { destination: 'Lomé', volume: '500 €', large: '100 €', small: '60 €', delay: '25–30 jours' },
   { destination: 'Abidjan', volume: '500 €', large: '100 €', small: '60 €', delay: '30–35 jours' },
-  { destination: 'Cotonou', volume: '750 €', large: '150 €', small: '90 €', delay: '35–45 jours' },
+  { destination: 'Cotonou', volume: '750 €', large: '150 €', small: '90 €', delay: '1,5 à 2 mois' },
   { destination: 'Dakar', volume: '500 €', large: '100 €', small: '60 €', delay: 'Environ 45 jours' },
   { destination: 'Cameroun · Douala / Yaoundé', volume: '850 €', large: 'Au volume', small: 'Au volume', delay: 'Environ 45 jours' }
 ]
@@ -60,7 +60,7 @@ const bulkyRates = [
         <p>Le ramassage à domicile est inclus dans ces tarifs et reste possible sur demande.</p>
       </div>
       <div class="rate-table-wrap">
-        <table class="rate-table">
+        <table class="rate-table mobile-standard-table">
           <thead><tr><th>Destination</th><th>m³</th><th>Grand carton<small>67 × 54 × 54 cm</small></th><th>Petit carton<small>60 × 40 × 40 cm</small></th><th>Délai estimé</th></tr></thead>
           <tbody><tr v-for="rate in standardRates" :key="rate.destination"><th>{{ rate.destination }}</th><td>{{ rate.volume }}</td><td>{{ rate.large }}</td><td>{{ rate.small }}</td><td>{{ rate.delay }}</td></tr></tbody>
         </table>
@@ -74,7 +74,7 @@ const bulkyRates = [
         <p>Ces tarifs s’appliquent uniquement aux colis déjà emballés et prêts à être expédiés.</p>
       </div>
       <div class="rate-table-wrap">
-        <table class="rate-table">
+        <table class="rate-table mobile-standard-table">
           <thead><tr><th>Destination</th><th>m³</th><th>Grand carton<small>67 × 54 × 54 cm</small></th><th>Petit carton<small>60 × 40 × 40 cm</small></th></tr></thead>
           <tbody><tr v-for="rate in depotRates" :key="rate.destination"><th>{{ rate.destination }}</th><td>{{ rate.volume }}</td><td>{{ rate.large }}</td><td>{{ rate.small }}</td></tr></tbody>
         </table>
@@ -101,17 +101,17 @@ const bulkyRates = [
         </article>
         <article class="rate-card rate-card-wide">
           <span class="rate-icon">▱</span><h3>Fûts</h3>
-          <div class="rate-table-wrap compact"><table class="rate-table"><thead><tr><th>Format</th><th>Lomé</th><th>Abidjan</th><th>Cotonou</th></tr></thead><tbody><tr><th>200 L <small>Collecte</small></th><td>120 €</td><td>150 €</td><td>150 €</td></tr><tr class="depot-row"><th>200 L <small>Dépôt</small></th><td>110 €</td><td>140 €</td><td>140 €</td></tr><tr><th>250 L <small>Collecte</small></th><td>140 €</td><td>170 €</td><td>170 €</td></tr><tr class="depot-row"><th>250 L <small>Dépôt</small></th><td>130 €</td><td>160 €</td><td>160 €</td></tr></tbody></table></div>
+          <div class="rate-table-wrap compact"><table class="rate-table mobile-destination-table"><thead><tr><th>Format</th><th>Lomé</th><th>Abidjan</th><th>Cotonou</th></tr></thead><tbody><tr><th>200 L <small>Collecte</small></th><td>120 €</td><td>150 €</td><td>150 €</td></tr><tr class="depot-row"><th>200 L <small>Dépôt</small></th><td>110 €</td><td>140 €</td><td>140 €</td></tr><tr><th>250 L <small>Collecte</small></th><td>140 €</td><td>170 €</td><td>170 €</td></tr><tr class="depot-row"><th>250 L <small>Dépôt</small></th><td>130 €</td><td>160 €</td><td>160 €</td></tr></tbody></table></div>
         </article>
         <article class="rate-card rate-card-wide">
           <span class="rate-icon">♢</span><h3>Vins & champagnes</h3>
-          <div class="rate-table-wrap compact"><table class="rate-table"><thead><tr><th>Carton de 6 bouteilles</th><th>Lomé</th><th>Abidjan</th><th>Cotonou</th></tr></thead><tbody><tr><th>Vin · collecte</th><td>15 €</td><td>20 €</td><td>25 €</td></tr><tr class="depot-row"><th>Vin · dépôt</th><td>10 €</td><td>15 €</td><td>20 €</td></tr><tr><th>Champagne · collecte</th><td>25 €</td><td>30 €</td><td>40 €</td></tr><tr class="depot-row"><th>Champagne · dépôt</th><td>20 €</td><td>25 €</td><td>35 €</td></tr></tbody></table></div>
+          <div class="rate-table-wrap compact"><table class="rate-table mobile-destination-table"><thead><tr><th>Carton de 6 bouteilles</th><th>Lomé</th><th>Abidjan</th><th>Cotonou</th></tr></thead><tbody><tr><th>Vin · collecte</th><td>15 €</td><td>20 €</td><td>25 €</td></tr><tr class="depot-row"><th>Vin · dépôt</th><td>10 €</td><td>15 €</td><td>20 €</td></tr><tr><th>Champagne · collecte</th><td>25 €</td><td>30 €</td><td>40 €</td></tr><tr class="depot-row"><th>Champagne · dépôt</th><td>20 €</td><td>25 €</td><td>35 €</td></tr></tbody></table></div>
         </article>
       </div>
 
       <div class="bulky-block">
         <div class="rates-heading"><div><p class="kicker">Produits volumineux</p><h2>Électroménager & <em>mobilier</em></h2></div><p>Tarifs à partir de, selon la destination et le mode de remise.</p></div>
-        <div class="rate-table-wrap"><table class="rate-table"><thead><tr><th>Article</th><th>Lomé</th><th>Abidjan</th><th>Cotonou</th></tr></thead><tbody><template v-for="item in bulkyRates" :key="item.item"><tr><th>{{ item.item }} <small>Collecte</small></th><td v-for="price in item.home" :key="price">{{ price }}</td></tr><tr v-if="item.depot" class="depot-row"><th>{{ item.item }} <small>Dépôt</small></th><td v-for="price in item.depot" :key="price">{{ price }}</td></tr></template></tbody></table></div>
+        <div class="rate-table-wrap"><table class="rate-table mobile-destination-table"><thead><tr><th>Article</th><th>Lomé</th><th>Abidjan</th><th>Cotonou</th></tr></thead><tbody><template v-for="item in bulkyRates" :key="item.item"><tr><th>{{ item.item }} <small>Collecte</small></th><td v-for="price in item.home" :key="price">{{ price }}</td></tr><tr v-if="item.depot" class="depot-row"><th>{{ item.item }} <small>Dépôt</small></th><td v-for="price in item.depot" :key="price">{{ price }}</td></tr></template></tbody></table></div>
       </div>
     </section>
 

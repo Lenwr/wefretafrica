@@ -36,7 +36,7 @@ const destinationLink = (destination: typeof destinations[number]) => destinatio
       <article><small>✈ Aérien Togo</small><strong>12 €/kg</strong><span>5 jours · dépôt 48 h avant</span></article>
       <article><small>✈ Aérien Bénin</small><strong>15 €/kg</strong><span>5 jours · dépôt 48 h avant</span></article>
       <article><small>▰ Maritime Togo</small><strong>100 €/carton</strong><span>Environ 1 mois</span></article>
-      <article><small>▰ Maritime Bénin</small><strong>150 €/carton</strong><span>Environ 1 mois et demi</span></article>
+      <article><small>▰ Maritime Bénin</small><strong>150 €/carton</strong><span>Environ 1 mois et demi à 2 mois</span></article>
     </section>
     <section class="packaging-guide">
       <div>
