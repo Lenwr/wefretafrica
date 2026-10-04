@@ -33,8 +33,9 @@ useHead({ script: [{
             href="https://www.google.com/maps/search/?api=1&query=96+Rue+Jules+Guesde+59000+Lille" target="_blank"
             rel="noopener">96 rue Jules Guesde<br>59000 Lille–Wazemmes</a><a
             href="mailto:lille.denamko@gmail.com">lille.denamko@gmail.com</a></div>
-        <div class="footer-contact"><b>Liens rapides</b><a href="/#calculateur">Calculer un tarif</a>
-          <NuxtLink to="/devis-en-ligne">Demander un devis</NuxtLink><a href="/#departs">Prochains départs</a>
+        <div class="footer-contact"><b>Liens rapides</b><NuxtLink to="/tarifs-delais">Tarifs & délais</NuxtLink><NuxtLink to="/tarifs-delais#calculateur-tarifs">Calculer mon tarif</NuxtLink>
+          <NuxtLink to="/devis-en-ligne?cta=footer">Demander mon devis</NuxtLink><a href="/#departs">Prochains départs</a>
+          <a href="https://wa.me/33676492528?text=Bonjour%2C%20je%20souhaite%20envoyer%20un%20colis." target="_blank" rel="noopener">WhatsApp</a>
           <NuxtLink to="/blog">Blog</NuxtLink>
         </div>
         <div class="footer-contact footer-review"><b>Votre expérience compte</b>

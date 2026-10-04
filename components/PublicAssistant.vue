@@ -4,8 +4,9 @@
     <section id="wefret-help" class="quick-help-panel" aria-label="Accès rapides WefretAfrica">
       <div class="quick-help-header"><div><strong>Comment pouvons-nous vous aider ?</strong><small>Choisissez une action</small></div></div>
       <nav class="quick-help-links">
-        <NuxtLink to="/#calculateur"><span>€</span><div><b>Calculer mon tarif</b><small>Obtenir une estimation immédiate</small></div><i>→</i></NuxtLink>
-        <NuxtLink to="/devis-en-ligne"><span>✓</span><div><b>Demander un devis</b><small>Recevoir un prix personnalisé</small></div><i>→</i></NuxtLink>
+        <NuxtLink to="/tarifs-delais#calculateur-tarifs"><span>€</span><div><b>Calculer mon tarif</b><small>Obtenir une estimation immédiate</small></div><i>→</i></NuxtLink>
+        <NuxtLink to="/devis-en-ligne?cta=widget"><span>✓</span><div><b>Demander mon devis</b><small>Recevoir un prix personnalisé</small></div><i>→</i></NuxtLink>
+        <a href="https://wa.me/33676492528?text=Bonjour%2C%20je%20souhaite%20envoyer%20un%20colis." target="_blank" rel="noopener"><span>◉</span><div><b>Écrire sur WhatsApp</b><small>06 76 49 25 28</small></div><i>→</i></a>
         <NuxtLink to="/blog"><span>i</span><div><b>Consulter les guides</b><small>Préparer et suivre mon colis</small></div><i>→</i></NuxtLink>
         <a href="tel:+33676492528"><span>☎</span><div><b>Appeler WefretAfrica</b><small>06 76 49 25 28</small></div><i>→</i></a>
       </nav>

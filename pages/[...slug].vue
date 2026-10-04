@@ -305,6 +305,10 @@ const freightPages: Record<string, PageContent> = {
       [
         'Quelle monnaie est utilisée sur place ?',
         'La monnaie utilisée au Sénégal est le franc CFA.'
+      ],
+      [
+        'Quel contact appeler pour un envoi vers Dakar ?',
+        'Contactez WefretAfrica au 06 76 49 25 28 par téléphone ou WhatsApp.'
       ]
     ]
   },
@@ -331,7 +335,7 @@ const freightPages: Record<string, PageContent> = {
       {
         title: 'Remise à destination et formalités',
         text:
-          'Retirez vos colis à Bonamoussadi à Douala ou à Total Biteng à Yaoundé. Une pièce d’identité est demandée. Certaines marchandises, notamment l’alcool, les médicaments et les huiles, nécessitent une vérification préalable. Les frais de douane ne sont pas facturés au destinataire.'
+          'Retirez vos colis à Bonamoussadi à Douala ou à Total Biteng à Yaoundé. Une pièce d’identité est demandée. Certaines marchandises, notamment l’alcool, les médicaments, les pâtes et les huiles, nécessitent une vérification préalable. Les frais de douane ne sont pas facturés au destinataire. La devise locale est le franc CFA.'
       }
     ],
 
@@ -360,11 +364,15 @@ const freightPages: Record<string, PageContent> = {
       ],
       [
         'Quels produits doivent être signalés avant l’envoi ?',
-        'Signalez notamment l’alcool, les téléphones, les batteries, les médicaments et les huiles afin que leur admissibilité soit vérifiée avant le dépôt.'
+        'Signalez notamment l’alcool, les téléphones, les batteries, les médicaments, les pâtes et les huiles afin que leur admissibilité soit vérifiée avant le dépôt.'
       ],
       [
         'Quel document présenter au retrait ?',
         'Une pièce d’identité est demandée au retrait du colis.'
+      ],
+      [
+        'Quel contact appeler pour un envoi vers le Cameroun ?',
+        'Contactez WefretAfrica au 06 76 49 25 28 par téléphone ou WhatsApp.'
       ]
     ]
   },
@@ -601,6 +609,19 @@ const guideSlugs = new Set([
 ])
 
 const isGuide = guideSlugs.has(slug)
+const destinationBySlug: Record<string, string> = {
+  'envois-colis-paris-lome': 'Togo',
+  'envois-colis-paris-cotonou': 'Bénin',
+  'envoi-colis-france-dakar': 'Sénégal',
+  'envoi-colis-france-cameroun': 'Cameroun'
+}
+const transportBySlug: Record<string, string> = { 'fret-aerien': 'Aérien', 'fret-maritime': 'Maritime' }
+const quoteLink = computed(() => ({ path: '/devis-en-ligne', query: {
+  ...(destinationBySlug[slug] ? { destination: destinationBySlug[slug] } : {}),
+  ...(transportBySlug[slug] ? { transport: transportBySlug[slug] } : {}),
+  from: slug,
+  cta: 'hero'
+} }))
 useFaqSchema(page.faq)
 
 usePageSeo(`${page.title} | WefretAfrica`, page.intro, page.image)
@@ -637,16 +658,16 @@ useHead({
         <div class="actions">
           <NuxtLink
             class="btn"
-            to="/devis-en-ligne"
+            :to="quoteLink"
           >
-            Obtenir un devis
+            Demander mon devis
           </NuxtLink>
 
           <a
             class="btn ghost"
-            href="#essentiel"
+            :href="isGuide ? '#essentiel' : '/tarifs-delais#calculateur-tarifs'"
           >
-            {{ isGuide ? 'Voir la réponse rapide' : 'Voir la solution' }}
+            {{ isGuide ? 'Voir la réponse rapide' : 'Calculer mon tarif' }}
           </a>
         </div>
       </div>
@@ -815,7 +836,7 @@ useHead({
           class="text-link"
           to="/devis-en-ligne?destination=Togo&transport=Maritime"
         >
-          Organiser mon envoi maritime vers Lomé →
+          Demander mon devis →
         </NuxtLink>
       </div>
     </section>
@@ -980,9 +1001,9 @@ useHead({
 
         <NuxtLink
           class="text-link"
-          to="/devis-en-ligne"
+          :to="{ ...quoteLink, query: { ...quoteLink.query, cta: 'mid' } }"
         >
-          Parler de mon envoi →
+          Demander mon devis →
         </NuxtLink>
       </div>
     </section>
@@ -1030,7 +1051,7 @@ useHead({
 
       <NuxtLink
         class="btn white"
-        to="/devis-en-ligne"
+        :to="{ ...quoteLink, query: { ...quoteLink.query, cta: 'final' } }"
       >
         Demander mon devis →
       </NuxtLink>

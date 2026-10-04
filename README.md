@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Le calculateur utilise des valeurs de démonstration : remplacez-les par vos vraies grilles tarifaires avant mise en production.
+Le calculateur reprend la grille tarifaire 2026 publiée dans `/tarifs-delais`. Toute modification de prix doit être reportée dans la page et dans `components/PriceCalculator.vue`.
 
 ## SEO à compléter
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 usePageSeo('Envoi de colis vers l’Afrique | WefretAfrica', 'Fret aérien et maritime depuis la France vers le Togo, le Bénin et de nombreuses destinations africaines.')
 useHead({ link: [{ rel: 'canonical', href: 'https://www.wefretafrica.com/' }, { rel: 'preload', as: 'image', href: '/hero-premium.webp', type: 'image/webp', fetchpriority: 'high' }], script: [{ type: 'application/ld+json', innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: 'WefretAfrica', url: 'https://www.wefretafrica.com/', logo: 'https://www.wefretafrica.com/logo.png', telephone: '+33676492528', description: 'Service de fret aérien et maritime depuis la France vers le Togo, le Bénin et l’Afrique de l’Ouest.', location: [{ '@type': 'Place', name: 'Bureau WefretAfrica Le Thillay', address: { '@type': 'PostalAddress', streetAddress: '15 Rue des Écoles', postalCode: '95500', addressLocality: 'Le Thillay', addressCountry: 'FR' } }, { '@type': 'Place', name: 'Agence de Lille-Wazemmes', telephone: '+33676492528', email: 'lille.denamko@gmail.com', address: { '@type': 'PostalAddress', streetAddress: '96 rue Jules Guesde', postalCode: '59000', addressLocality: 'Lille', addressCountry: 'FR' } }], areaServed: ['Île-de-France', 'Lille', 'Métropole Européenne de Lille', 'Lyon', 'Métropole de Lyon', 'Togo', 'Bénin', 'Afrique de l’Ouest'] }) }] })
-const services = [['✈', 'Fret aérien', 'Une solution rapide pour vos colis urgents vers Lomé, Cotonou et nos autres destinations.', '/fret-aerien'], ['▰', 'Fret maritime', 'Expédiez vos colis et effets personnels à prix maîtrisé, avec un suivi clair à chaque étape.', '/fret-maritime'], ['⌂', 'Enlèvement à domicile', 'Nous récupérons vos colis en Île-de-France, à Lille et à Lyon, sur rendez-vous.', '/devis-en-ligne']]
+const services = [['✈', 'Fret aérien', 'Une solution rapide pour vos colis urgents vers Lomé, Cotonou et nos autres destinations.', '/fret-aerien', 'En savoir plus →'], ['▰', 'Fret maritime', 'Expédiez vos colis et effets personnels à prix maîtrisé, avec un suivi clair à chaque étape.', '/fret-maritime', 'En savoir plus →'], ['⌂', 'Enlèvement à domicile', 'Nous récupérons vos colis en Île-de-France, à Lille et à Lyon, sur rendez-vous.', '/devis-en-ligne?pickup=Enlèvement%20à%20domicile&cta=services', 'Demander une collecte →']]
 const faqs = [['Quels types de colis puis-je envoyer ?', 'Effets personnels, vêtements, électroménager et marchandises autorisées.'], ['Comment suivre mon colis ?', 'Un numéro de suivi vous permet de consulter l’avancement de votre envoi.'], ['Fret aérien ou maritime : que choisir ?', 'L’aérien privilégie la rapidité. Le maritime est plus économique pour les volumes importants.']]
 useFaqSchema(faqs)
 const destinations = [
@@ -26,8 +26,8 @@ const destinationLink = (destination: typeof destinations[number]) => destinatio
         <h1>Envoyez vos colis en Afrique, <em>sans complication.</em></h1>
         <p>Des solutions aériennes et maritimes vers le Togo, le Bénin et de nombreuses autres destinations. Enlèvement
           disponible en Île-de-France, à Lille et à Lyon.</p>
-        <div class="actions"><a class="btn" href="#calculateur">Calculer mon tarif</a>
-          <NuxtLink class="btn ghost" to="/devis-en-ligne">Demander un devis</NuxtLink>
+        <div class="actions"><NuxtLink class="btn" to="/tarifs-delais">Voir les tarifs & délais</NuxtLink>
+          <NuxtLink class="btn ghost" to="/tarifs-delais#calculateur-tarifs">Calculer mon tarif</NuxtLink>
         </div>
         <div class="trust">✓ Tarifs immédiats　 ✓ Délais annoncés　 ✓ Accompagnement humain</div>
       </div>
@@ -43,11 +43,10 @@ const destinationLink = (destination: typeof destinations[number]) => destinatio
         <p class="kicker">Formats maritimes</p>
         <h2>Choisissez le contenant <em>adapté</em></h2>
         <p>Notre carton de 67 × 54 × 54 cm coûte 100 € vers le Togo et 150 € vers le Bénin. Pour un volume plus
-          important, le fût coûte 150 € vers le Togo et 180 € vers le Bénin.</p>
-        <NuxtLink class="text-link" to="/devis-en-ligne?transport=Maritime&type=Carton%20%2F%20barrique">Demander un
-          devis maritime →</NuxtLink>
+        important, le fût de 200 L coûte 120 € vers le Togo et 150 € vers le Bénin avec collecte à domicile.</p>
+        <NuxtLink class="text-link" to="/devis-en-ligne?transport=Maritime&type=Carton%20%2F%20barrique&cta=packaging&from=home">Demander mon devis →</NuxtLink>
       </div><img src="/carton-fut-tarifs.webp"
-        alt="Tarifs maritimes : carton de 67 par 54 par 54 centimètres à 100 euros vers le Togo ou 150 euros vers le Bénin, et fût à 150 euros vers le Togo ou 180 euros vers le Bénin"
+        alt="Tarifs maritimes : carton de 67 par 54 par 54 centimètres à 100 euros vers le Togo ou 150 euros vers le Bénin, et fût de 200 litres à 120 euros vers le Togo ou 150 euros vers le Bénin"
         loading="lazy" decoding="async">
     </section>
     <section class="essential-banner" aria-label="Nos zones de collecte">
@@ -63,7 +62,7 @@ const destinationLink = (destination: typeof destinations[number]) => destinatio
           <p>Choisissez la destination, le transport et le type de colis pour afficher un premier tarif avant de
             demander votre devis.</p>
         </div>
-      </div><a href="#calculateur">Calculer mon tarif →</a>
+      </div><NuxtLink to="/tarifs-delais#calculateur-tarifs">Calculer mon tarif →</NuxtLink>
     </section>
     <section id="services" class="section">
       <div class="heading">
@@ -77,23 +76,9 @@ const destinationLink = (destination: typeof destinations[number]) => destinatio
         <article v-for="(s, i) in services" :key="s[1]"><small>0{{ i + 1 }}</small><i>{{ s[0] }}</i>
           <h3>{{ s[1] }}</h3>
           <p>{{ s[2] }}</p>
-          <NuxtLink :to="s[3]">En savoir plus →</NuxtLink>
+          <NuxtLink :to="s[3]">{{ s[4] }}</NuxtLink>
         </article>
       </div>
-    </section>
-    <section id="calculateur" class="calculator">
-      <div>
-        <p class="kicker">Estimation express</p>
-        <h2>Combien coûte votre <em>expédition ?</em></h2>
-        <p>Obtenez une première estimation en quelques secondes. Le tarif final est confirmé après vérification du
-          colis.</p>
-        <ul>
-          <li>✓ Sans engagement</li>
-          <li>✓ Résultat immédiat</li>
-          <li>✓ Devis personnalisé</li>
-        </ul>
-      </div>
-      <PriceCalculator />
     </section>
     <section id="destinations" class="section destinations">
       <div class="heading">
@@ -172,7 +157,7 @@ const destinationLink = (destination: typeof destinations[number]) => destinatio
         <div class="actions"><a class="btn"
             href="https://www.google.com/maps/search/?api=1&query=15+Rue+des+Écoles+95500+Le+Thillay" target="_blank"
             rel="noopener">Voir sur la carte</a>
-          <NuxtLink class="text-link" to="/devis-en-ligne?city=Le%20Thillay">Préparer mon envoi →</NuxtLink>
+          <NuxtLink class="text-link" to="/devis-en-ligne?city=Le%20Thillay&cta=location&from=home">Demander mon devis →</NuxtLink>
         </div>
       </div>
     </section>
@@ -209,10 +194,9 @@ const destinationLink = (destination: typeof destinations[number]) => destinatio
       <a class="btn" href="https://g.page/r/CZ9JT5M825kgEAE/review" target="_blank" rel="noopener">Donner mon avis →</a>
     </section>
     <section class="cta">
-      <h2>Votre colis mérite un trajet <em>bien accompagné.</em></h2><a class="btn white" href="#calculateur">Estimer
-        mon envoi →</a>
+      <h2>Votre colis mérite un trajet <em>bien accompagné.</em></h2><div class="actions"><NuxtLink class="btn white" to="/devis-en-ligne?cta=final&from=home">Demander mon devis →</NuxtLink><a class="btn ghost" href="tel:+33676492528">Appeler</a></div>
     </section>
     <SiteFooter />
-    <NuxtLink class="mobile-quote" to="/devis-en-ligne">Demander un devis</NuxtLink>
+    <NuxtLink class="mobile-quote" to="/devis-en-ligne?cta=sticky&from=home">Demander mon devis</NuxtLink>
   </main>
 </template>
