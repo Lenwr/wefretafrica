@@ -47,5 +47,40 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode:502, statusMessage:'La demande n’a pas pu être enregistrée. Contactez-nous directement.' })
   }
 
+  if (!config.twilioAccountSid || !config.twilioAuthToken || !config.twilioFromNumber || !config.twilioToNumber) {
+    throw createError({ statusCode:503, statusMessage:'La notification SMS doit encore être configurée par WefretAfrica.' })
+  }
+
+  const sms = [
+    'NOUVEAU DEVIS',
+    clean(request.name),
+    `Tel: ${clean(request.phone)}`,
+    `Vers: ${clean(request.destination)} (${clean(request.transport)})`,
+    `Colis: ${clean(request.parcelType)}`,
+    request.measurement ? `Poids/vol: ${clean(request.measurement)}` : '',
+    request.city ? `Collecte: ${clean(request.city)}` : '',
+    `Message: ${clean(request.message)}`
+  ].filter(Boolean).join('\n').slice(0, 1500)
+  const smsPayload = new URLSearchParams({
+    To: config.twilioToNumber,
+    From: config.twilioFromNumber,
+    Body: sms
+  })
+  const twilioResponse = await fetch(
+    `https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(config.twilioAccountSid)}/Messages.json`,
+    {
+      method:'POST',
+      headers:{
+        Authorization:`Basic ${Buffer.from(`${config.twilioAccountSid}:${config.twilioAuthToken}`).toString('base64')}`,
+        'Content-Type':'application/x-www-form-urlencoded'
+      },
+      body:smsPayload
+    }
+  )
+  if (!twilioResponse.ok) {
+    console.error('Quote SMS error', twilioResponse.status, await twilioResponse.text().catch(() => ''))
+    throw createError({ statusCode:502, statusMessage:'La demande a été enregistrée, mais le SMS n’a pas pu être transmis.' })
+  }
+
   return { ok:true }
 })
