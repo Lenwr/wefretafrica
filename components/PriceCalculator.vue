@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type Destination = 'Togo' | 'Bénin' | 'Sénégal' | 'Cameroun' | 'Abidjan / Côte d’Ivoire' | 'Autre'
+type Destination = 'Togo' | 'Bénin' | 'Sénégal' | 'Mali' | 'Guinée-Conakry' | 'Cameroun' | 'Abidjan / Côte d’Ivoire' | 'Autre'
 type Category = 'parcel' | 'clothes' | 'electronic' | 'large-carton' | 'small-carton' | 'volume' | 'tv' | 'other'
 
 const props = withDefaults(defineProps<{ initialMode?: 'air' | 'sea', source?: string }>(), { initialMode: 'air', source: 'tarifs' })
@@ -13,7 +13,7 @@ const shape = ref<'box' | 'cylinder' | 'sphere' | 'irregular'>('box')
 const length = ref(100), width = ref(60), height = ref(50)
 const diameter = ref(60), cylinderHeight = ref(100)
 
-const airRates: Partial<Record<Destination, number>> = { Togo: 12, Bénin: 15, Sénégal: 12, Cameroun: 13 }
+const airRates: Partial<Record<Destination, number>> = { Togo: 12, Bénin: 15, Sénégal: 15, Mali: 14, 'Guinée-Conakry': 14, Cameroun: 15 }
 const seaVolumeRates: Partial<Record<Destination, number>> = { Togo: 500, Sénégal: 500, 'Abidjan / Côte d’Ivoire': 500, Bénin: 750, Cameroun: 850 }
 const largeCartonRates: Partial<Record<Destination, number>> = { Togo: 100, Sénégal: 100, 'Abidjan / Côte d’Ivoire': 100, Bénin: 150 }
 const smallCartonRates: Partial<Record<Destination, number>> = { Togo: 60, Sénégal: 60, 'Abidjan / Côte d’Ivoire': 60, Bénin: 90 }
@@ -90,7 +90,7 @@ const quoteLink = computed(() => ({ path: '/devis-en-ligne', query: {
   <div class="calculator-card">
     <div class="mode-toggle"><button type="button" :class="{ active: mode === 'air' }" @click="mode = 'air'">✈ Aérien</button><button type="button" :class="{ active: mode === 'sea' }" @click="mode = 'sea'">▰ Maritime</button></div>
     <div class="calculator-fields">
-      <label>Destination<select v-model="destination"><option>Togo</option><option>Bénin</option><option>Sénégal</option><option>Cameroun</option><option>Abidjan / Côte d’Ivoire</option><option value="Autre">Autre destination</option></select></label>
+      <label>Destination<select v-model="destination"><option>Togo</option><option>Bénin</option><option>Sénégal</option><option>Mali</option><option>Guinée-Conakry</option><option>Cameroun</option><option>Abidjan / Côte d’Ivoire</option><option value="Autre">Autre destination</option></select></label>
       <label>Type d’envoi<select v-if="mode === 'air'" v-model="category"><option value="parcel">Colis standard</option><option value="clothes">Vêtements / effets personnels</option><option value="electronic">Appareil électronique</option><option value="other">Autre</option></select><select v-else v-model="category"><option value="large-carton">Grand carton</option><option value="small-carton">Petit carton</option><option value="volume">Au volume</option><option value="tv">Télévision</option><option value="other">Autre objet</option></select></label>
     </div>
     <template v-if="mode === 'air'">

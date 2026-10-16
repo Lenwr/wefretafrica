@@ -29,6 +29,7 @@ const bulkyRates = [
   { item: 'Canapés et fauteuils', home: ['100 €', '120 €', '150 €'], depot: ['90 €', '110 €', '140 €'] },
   { item: 'Matelas 2 places', home: ['120 €', '150 €', '150 €'], depot: ['110 €', '130 €', '130 €'] }
 ]
+
 </script>
 
 <template>
@@ -113,6 +114,7 @@ const bulkyRates = [
         <div class="rates-heading"><div><p class="kicker">Produits volumineux</p><h2>Électroménager & <em>mobilier</em></h2></div><p>Tarifs à partir de, selon la destination et le mode de remise.</p></div>
         <div class="rate-table-wrap"><table class="rate-table mobile-destination-table"><thead><tr><th>Article</th><th>Lomé</th><th>Abidjan</th><th>Cotonou</th></tr></thead><tbody><template v-for="item in bulkyRates" :key="item.item"><tr><th>{{ item.item }} <small>Collecte</small></th><td v-for="price in item.home" :key="price">{{ price }}</td></tr><tr v-if="item.depot" class="depot-row"><th>{{ item.item }} <small>Dépôt</small></th><td v-for="price in item.depot" :key="price">{{ price }}</td></tr></template></tbody></table></div>
       </div>
+
     </section>
 
     <section id="services" class="rates-section rates-dark">

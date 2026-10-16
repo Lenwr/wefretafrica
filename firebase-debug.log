@@ -1,0 +1,86 @@
+[debug] [2026-10-10T08:36:57.931Z] ----------------------------------------------------------------------
+[debug] [2026-10-10T08:36:57.934Z] Command:       /Users/user/.nvm/versions/node/v26.9.0/bin/node /Users/user/.nvm/versions/node/v26.9.0/bin/firebase login --no-localhost
+[debug] [2026-10-10T08:36:57.934Z] CLI Version:   15.30.2
+[debug] [2026-10-10T08:36:57.934Z] Platform:      darwin
+[debug] [2026-10-10T08:36:57.934Z] Node Version:  v26.9.0
+[debug] [2026-10-10T08:36:57.934Z] Detected Agent: unknown
+[debug] [2026-10-10T08:36:57.934Z] Time:          Sat Oct 10 2026 10:36:57 GMT+0200 (Central European Summer Time)
+[debug] [2026-10-10T08:36:57.934Z] ----------------------------------------------------------------------
+[debug] 
+[info] i  The Firebase CLI’s MCP server feature can optionally make use of Gemini in Firebase. Learn more about Gemini in Firebase and how it uses your data: https://firebase.google.com/docs/gemini-in-firebase#how-gemini-in-firebase-uses-your-data 
+[info] 
+[info] i  Firebase optionally collects CLI and Emulator Suite usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not used to identify you. 
+[debug] [2026-10-10T09:44:59.680Z] ExitPromptError: User force closed the prompt with SIGINT
+    at Interface.sigint (/Users/user/.nvm/versions/node/v26.9.0/lib/node_modules/firebase-tools/node_modules/@inquirer/core/dist/commonjs/lib/create-prompt.js:101:37)
+    at Interface.emit (node:events:514:20)
+    at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1353:18)
+    at ReadStream.onkeypress (node:internal/readline/interface:292:20)
+    at ReadStream.emit (node:events:526:24)
+    at emitKeys (node:internal/readline/utils:371:14)
+    at emitKeys.next (<anonymous>)
+    at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+    at ReadStream.emit (node:events:514:20)
+    at addChunk (node:internal/streams/readable:576:12)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-10-12T21:49:33.724Z] ----------------------------------------------------------------------
+[debug] [2026-10-12T21:49:33.729Z] Command:       /Users/user/.local/share/fnm/node-versions/v20.19.0/installation/bin/node /Users/user/.local/share/fnm/node-versions/v20.19.0/installation/bin/firebase functions:list --project aarontravelgestion --json
+[debug] [2026-10-12T21:49:33.729Z] CLI Version:   15.21.0
+[debug] [2026-10-12T21:49:33.730Z] Platform:      darwin
+[debug] [2026-10-12T21:49:33.730Z] Node Version:  v20.19.0
+[debug] [2026-10-12T21:49:33.730Z] Detected Agent: codex_cli
+[debug] [2026-10-12T21:49:33.730Z] Time:          Mon Oct 12 2026 23:49:33 GMT+0200 (Central European Summer Time)
+[debug] [2026-10-12T21:49:33.730Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-10-12T21:49:33.788Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-12T21:49:33.789Z] > authorizing via signed-in user (saidabou.lateam@gmail.com)
+[debug] [2026-10-12T21:49:33.790Z] [iam] checking project aarontravelgestion for permissions ["cloudfunctions.functions.list","firebase.projects.get","run.services.list"]
+[debug] [2026-10-12T21:49:33.796Z] Checked if tokens are valid: false, expires at: 1791800876549
+[debug] [2026-10-12T21:49:33.797Z] Checked if tokens are valid: false, expires at: 1791800876549
+[debug] [2026-10-12T21:49:33.797Z] > refreshing access token with scopes: []
+[debug] [2026-10-12T21:49:33.803Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-10-12T21:49:33.803Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-10-12T21:49:34.014Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-10-12T21:49:34.014Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-10-12T21:49:34.046Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions [none]
+[debug] [2026-10-12T21:49:34.047Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions  x-goog-user-project=aarontravelgestion
+[debug] [2026-10-12T21:49:34.048Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions {"permissions":["cloudfunctions.functions.list","firebase.projects.get","run.services.list"]}
+[debug] [2026-10-12T21:49:34.700Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions 200
+[debug] [2026-10-12T21:49:34.700Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions {"permissions":["cloudfunctions.functions.list","firebase.projects.get","run.services.list"]}
+[debug] [2026-10-12T21:49:34.700Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:34.701Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:34.701Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/aarontravelgestion/locations/-/functions [none]
+[debug] [2026-10-12T21:49:35.534Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/aarontravelgestion/locations/-/functions 200
+[debug] [2026-10-12T21:49:35.534Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/aarontravelgestion/locations/-/functions {}
+[debug] [2026-10-12T21:49:35.534Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:35.534Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:35.535Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/aarontravelgestion/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2026-10-12T21:49:36.619Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/aarontravelgestion/locations/-/functions 200
+[debug] [2026-10-12T21:49:57.923Z] ----------------------------------------------------------------------
+[debug] [2026-10-12T21:49:57.926Z] Command:       /Users/user/.local/share/fnm/node-versions/v20.19.0/installation/bin/node /Users/user/.local/share/fnm/node-versions/v20.19.0/installation/bin/firebase functions:list --project aarontravelgestion --json
+[debug] [2026-10-12T21:49:57.926Z] CLI Version:   15.21.0
+[debug] [2026-10-12T21:49:57.926Z] Platform:      darwin
+[debug] [2026-10-12T21:49:57.926Z] Node Version:  v20.19.0
+[debug] [2026-10-12T21:49:57.926Z] Detected Agent: codex_cli
+[debug] [2026-10-12T21:49:57.927Z] Time:          Mon Oct 12 2026 23:49:57 GMT+0200 (Central European Summer Time)
+[debug] [2026-10-12T21:49:57.927Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-10-12T21:49:57.948Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-12T21:49:57.948Z] > authorizing via signed-in user (saidabou.lateam@gmail.com)
+[debug] [2026-10-12T21:49:57.948Z] [iam] checking project aarontravelgestion for permissions ["cloudfunctions.functions.list","firebase.projects.get","run.services.list"]
+[debug] [2026-10-12T21:49:57.949Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:57.949Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:57.950Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions [none]
+[debug] [2026-10-12T21:49:57.950Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions  x-goog-user-project=aarontravelgestion
+[debug] [2026-10-12T21:49:57.950Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions {"permissions":["cloudfunctions.functions.list","firebase.projects.get","run.services.list"]}
+[debug] [2026-10-12T21:49:58.692Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions 200
+[debug] [2026-10-12T21:49:58.692Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aarontravelgestion:testIamPermissions {"permissions":["cloudfunctions.functions.list","firebase.projects.get","run.services.list"]}
+[debug] [2026-10-12T21:49:58.694Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:58.694Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:58.694Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/aarontravelgestion/locations/-/functions [none]
+[debug] [2026-10-12T21:49:59.857Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/aarontravelgestion/locations/-/functions 200
+[debug] [2026-10-12T21:49:59.857Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/aarontravelgestion/locations/-/functions {}
+[debug] [2026-10-12T21:49:59.857Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:59.858Z] Checked if tokens are valid: true, expires at: 1791845373015
+[debug] [2026-10-12T21:49:59.859Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/aarontravelgestion/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2026-10-12T21:50:00.536Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/aarontravelgestion/locations/-/functions 200

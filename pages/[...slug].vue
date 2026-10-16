@@ -6,6 +6,15 @@ const slug = Array.isArray(route.params.slug)
   ? route.params.slug.join('-')
   : String(route.params.slug || '')
 
+const cameroonMaritimeRates = [
+  ['Canapé 2 places', '450 €'], ['Canapé 3 places', '550 €'], ['Canapé 4 places', '700 €'], ['Canapé d’angle 5 à 7 places à partir de', '900 €'], ['Fauteuil de salon', '250 €'],
+  ['Cantine 80 / 90 / 100 / 110 cm', '140 / 160 / 180 / 200 €'], ['Cartons / sacs / colis', '850 € / m³'], ['Chaise à partir de', '40 €'],
+  ['Congélateur jusqu’à 250 L', '300 €'], ['Congélateur 251 à 500 L', '450 €'], ['Congélateur + de 500 L', '550 €'], ['Cuisinière de +4 foyers', '190 €'], ['Cuisinière de -4 foyers', '150 €'],
+  ['Frigidaire de chambre', '150 €'], ['Frigidaire 140 à 190 cm', '290 à 400 €'], ['Frigidaire américain', '600 €'], ['Fût bleu 220 L', '220 €'], ['Fût noir 250 L', '250 €'],
+  ['Groupe électrogène à partir de', '350 €'], ['Lave-linge / sèche-linge 6–10 kg', '200 €'], ['Lave-linge + de 10 kg', 'Sur devis'], ['Matelas 1 place', '80 €'], ['Matelas 2 places', '150 € occasion · 200 € neuf'],
+  ['Moteur de véhicules', 'Sur devis'], ['Micro-ondes standard', '45 €'], ['Télévisions 80 à 150 cm', '150 à 350 €'], ['Télévision 75”', '500 €'], ['Télévision 85”', '700 €'], ['Vélo enfant', '50 €'], ['Vélo adulte', '80 €']
+]
+
 type PageContent = {
   eyebrow: string
   title: string
@@ -342,7 +351,7 @@ const freightPages: Record<string, PageContent> = {
     features: [
       {
         icon: '✈',
-        title: 'Aérien · 13 €/kg',
+        title: 'Aérien · 15 €/kg',
         text: 'Minimum 5 kg, délai indicatif de 5 jours et dépôt 72 h avant le départ.'
       },
       {
@@ -724,6 +733,12 @@ useHead({
           </p>
         </article>
       </div>
+    </section>
+
+    <section v-if="slug === 'envoi-colis-france-cameroun'" class="section cameroon-rate-block">
+      <div class="heading"><div><p class="kicker">Cameroun · maritime</p><h2>Grille tarifaire <em>par type de colis</em></h2></div><p>Tarifs indicatifs vers Douala et Yaoundé. Ils peuvent varier selon le poids, le volume et la valeur de la marchandise.</p></div>
+      <div class="rate-table-wrap"><table class="rate-table mobile-standard-table"><thead><tr><th>Dénomination</th><th>Tarif</th></tr></thead><tbody><tr v-for="rate in cameroonMaritimeRates" :key="rate[0]"><th>{{ rate[0] }}</th><td>{{ rate[1] }}</td></tr></tbody></table></div>
+      <p class="rates-inline-note"><strong>Retrait :</strong> Douala (Bonamoussadi) ou Yaoundé (Total Biteng). Tarif variable en fonction de la valeur de la marchandise et du poids.</p>
     </section>
 
     <!-- INFO FRET AERIEN -->

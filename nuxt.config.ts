@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     firebaseProjectId: process.env.NUXT_FIREBASE_PROJECT_ID || '',
     firebaseClientEmail: process.env.NUXT_FIREBASE_CLIENT_EMAIL || '',
     firebasePrivateKey: process.env.NUXT_FIREBASE_PRIVATE_KEY || '',
+    firebasePrivateKeyBase64: process.env.NUXT_FIREBASE_PRIVATE_KEY_BASE64 || '',
     twilioAccountSid: process.env.NUXT_TWILIO_ACCOUNT_SID || '',
     twilioAuthToken: process.env.NUXT_TWILIO_AUTH_TOKEN || '',
     twilioFromNumber: process.env.NUXT_TWILIO_FROM_NUMBER || '',

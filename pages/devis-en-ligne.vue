@@ -16,12 +16,13 @@ const sending=ref(false)
 const success=ref(false)
 const error=ref('')
 async function submit(){
+  if(sending.value) return
   sending.value=true; error.value=''; success.value=false
   try{
-    await $fetch('/api/devis',{method:'POST',body:form})
+    await $fetch('/api/devis',{method:'POST',body:form,retry:0})
     success.value=true
   }
-  catch(e:any){ error.value=e?.data?.statusMessage || 'Impossible d’envoyer la demande. Réessayez ou contactez-nous directement.' }
+  catch(e:any){ error.value=e?.data?.message || e?.data?.statusMessage || 'Impossible d’envoyer la demande. Réessayez ou contactez-nous directement.' }
   finally{ sending.value=false }
 }
 </script>
@@ -38,7 +39,7 @@ async function submit(){
       </button>
       <div class="submit-feedback" aria-live="polite" aria-atomic="true">
         <p v-if="sending" class="form-pending"><span class="status-spinner" aria-hidden="true"></span><span><b>Transmission en cours</b><small>Veuillez patienter et ne fermez pas cette page.</small></span></p>
-        <p v-else-if="success" class="form-success"><span>✓</span><span><b>Demande bien envoyée</b><small>Notre équipe vous répondra rapidement par téléphone.</small></span></p>
+        <p v-else-if="success" class="form-success"><span>✓</span><span><b>Demande bien enregistrée</b><small>Notre équipe vous répondra rapidement par téléphone.</small></span></p>
         <p v-else-if="error" class="form-error"><span>!</span><span><b>La demande n’a pas été envoyée</b><small>{{ error }}</small></span></p>
       </div>
     </form>
